@@ -19,8 +19,8 @@ const App = () => {
     
     <NavigationContainer>
       
-      {/* <MainNavigation></MainNavigation> */}
-      <RegisterNavigation></RegisterNavigation>
+      <MainNavigation></MainNavigation>
+      {/* <RegisterNavigation></RegisterNavigation> */}
 
     </NavigationContainer>
     
