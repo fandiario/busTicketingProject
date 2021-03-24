@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
+import Axios from "axios"
 import { Image } from "react-native"
 import {Body, Card, CardItem, Container, Content, Grid, Header, H1, H2, Row, Text, Col, View } from "native-base"
 
@@ -8,163 +9,217 @@ import spacingStyle from "../../Supports/Styles/Spacing"
 import typoStyle from "../../Supports/Styles/Typography"
 import borderStyle from "../../Supports/Styles/Border"
 
+// Link API
+import urlAPI from "../../Supports/Constants/urlAPI"
+
 
 const ShuttlesList = () => {
-    return (
-        <Container>
-            <Content>
 
-                <Grid style={{...colorStyle.bgPrimary}}>
-                    <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree,}}>
-                        <H1 style={{...colorStyle.light, ...typoStyle.fsBold}}>
-                            BusyBus
-                        </H1>
-                    </Row>
-                </Grid>
+    const [shuttleData, setShuttleData] = useState (null)
 
-                <H2 style={{...spacingStyle.mtThree, ...spacingStyle.mlThree, ...typoStyle.fsBold}}>
-                    Shuttle List
-                </H2>
+    const getShuttleData = () => {
+        Axios.get (urlAPI + `/shuttles`)
 
-                <View style={{...spacingStyle.myThree}}>
+        .then ((res) => {
+            setShuttleData (res.data)
+        })
 
-                    <Card>
-                        <CardItem header style={{flexDirection: "column"}}>
+        .catch ((err) => {
+            console.log (err)
+        })
+    }
 
-                            <Grid>
-                                <Text style={{...typoStyle.fsBold}}>
-                                    Bus Pahala Kencana 
-                                </Text> 
-                            </Grid>
+    const mapShuttleData = () => {
 
-                            <Grid>
-                                <Text style={{...typoStyle.fsBold}}>
-                                    Executive Class
-                                </Text>
-                            </Grid>
-                        </CardItem>
-                        <CardItem>
-                        <Body>
+    }
 
-                            <Grid>
-                                <Col>
-                                    <Image source={{uri: 'https://st.redbus.in/bo-images/IDN/WM/16130/1215/FR/L/LSk97O.jpeg'}} style={{height: 75, width: "auto", flex: 1}}></Image>
-                                </Col>
+    useEffect (() => {
+        getShuttleData ()
+    }, [])
 
-                                <Col>
-                                    <Col style={{...spacingStyle.mlThree}}>
-                                        <Text>
-                                            From : 
-                                        </Text>
+    // if ( shuttleData === null ) {
+    //     return (
+    //         <Container>
+    //             <Content>
+
+    //                 <Grid style={{...colorStyle.bgPrimary}}>
+    //                     <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree,}}>
+    //                         <H1 style={{...colorStyle.light, ...typoStyle.fsBold}}>
+    //                             BusyBus
+    //                         </H1>
+    //                     </Row>
+    //                 </Grid>
+    
+    //                 <H2 style={{...spacingStyle.mtThree, ...spacingStyle.mlThree, ...typoStyle.fsBold}}>
+    //                     Shuttle List : Loading
+    //                 </H2>
+
+    //             </Content>
+    //         </Container>
+    //     )
+
+    // } else {
+        return (
+            <Container>
+                <Content>
+    
+                    <Grid style={{...colorStyle.bgPrimary}}>
+                        <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree,}}>
+                            <H1 style={{...colorStyle.light, ...typoStyle.fsBold}}>
+                                BusyBus
+                            </H1>
+                        </Row>
+                    </Grid>
+    
+                    <H2 style={{...spacingStyle.mtThree, ...spacingStyle.mlThree, ...typoStyle.fsBold}}>
+                        Shuttle List
+                    </H2>
+    
+                    <View style={{...spacingStyle.myThree}}>
+    
+                        <Card>
+                            <CardItem header style={{flexDirection: "column"}}>
+    
+                                <Grid>
+                                    <Text style={{...typoStyle.fsBold}}>
+                                        Bus Pahala Kencana 
+                                    </Text> 
+                                </Grid>
+    
+                                <Grid>
+                                    <Text style={{...typoStyle.fsBold}}>
+                                        Executive Class
+                                    </Text>
+                                </Grid>
+                            </CardItem>
+                            <CardItem>
+                            <Body>
+    
+                                <Grid>
+                                    <Col>
+                                        <Image source={{uri: 'https://st.redbus.in/bo-images/IDN/WM/16130/1215/FR/L/LSk97O.jpeg'}} style={{height: 75, width: "auto", flex: 1}}></Image>
                                     </Col>
-                                    <Col style={{...spacingStyle.mlThree}}>
-                                        <Text>
-                                            Bandung 11:00
-                                        </Text>
+    
+                                    <Col>
+                                        <Col style={{...spacingStyle.mlThree}}>
+                                            <Text>
+                                                From : 
+                                            </Text>
+                                        </Col>
+                                        <Col style={{...spacingStyle.mlThree}}>
+                                            <Text>
+                                                Bandung 11:00
+                                            </Text>
+                                        </Col>
                                     </Col>
-                                </Col>
+                                    
+    
+                                    <Col>
+                                        <Col style={{...spacingStyle.mlThree}}>
+                                            <Text>
+                                                To : 
+                                            </Text>
+                                        </Col>
+                                        <Col style={{...spacingStyle.mlThree}}>
+                                            <Text>
+                                                Surabaya  23:45
+                                            </Text>
+                                        </Col>
+                                    </Col>
+                                </Grid>
                                 
-
-                                <Col>
-                                    <Col style={{...spacingStyle.mlThree}}>
-                                        <Text>
-                                            To : 
-                                        </Text>
-                                    </Col>
-                                    <Col style={{...spacingStyle.mlThree}}>
-                                        <Text>
-                                            Surabaya  23:45
-                                        </Text>
-                                    </Col>
-                                </Col>
-                            </Grid>
-                            
-                        </Body>
-                        </CardItem>
-
-                        <CardItem footer style={{...spacingStyle.mtOne}}>
-                            <Text style={{...typoStyle.fsBold}}>
-                                Rp. 275.000
-                            </Text>
-                        </CardItem>
-                    </Card>
-
-                    <Card>
-                        <CardItem header style={{flexDirection: "column"}}>
-
-                            <Grid>
+                            </Body>
+                            </CardItem>
+    
+                            <CardItem footer style={{...spacingStyle.mtOne}}>
                                 <Text style={{...typoStyle.fsBold}}>
-                                    Bus Sugeng Rahayu
-                                </Text> 
-                            </Grid>
-
-                            <Grid>
-                                <Text style={{...typoStyle.fsBold}}>
-                                    Executive Class
+                                    Rp. 275.000
                                 </Text>
-                            </Grid>
-                        </CardItem>
-                        <CardItem>
-                        <Body>
-
-                            <Grid>
-                                <Col>
-                                    <Image source={{uri: 'https://st.redbus.in/bo-images/IDN/WM/18732/850/FR/L/Yv1HAi.jpeg'}} style={{height: 75, width: "auto", flex: 1}}></Image>
-                                </Col>
-
-                                <Col>
-                                    <Col style={{...spacingStyle.mlThree}}>
-                                        <Text>
-                                            From : 
-                                        </Text>
+                            </CardItem>
+                        </Card>
+    
+                        <Card>
+                            <CardItem header style={{flexDirection: "column"}}>
+    
+                                <Grid>
+                                    <Text style={{...typoStyle.fsBold}}>
+                                        Bus Sugeng Rahayu
+                                    </Text> 
+                                </Grid>
+    
+                                <Grid>
+                                    <Text style={{...typoStyle.fsBold}}>
+                                        Executive Class
+                                    </Text>
+                                </Grid>
+                            </CardItem>
+                            <CardItem>
+                            <Body>
+    
+                                <Grid>
+                                    <Col>
+                                        <Image source={{uri: 'https://st.redbus.in/bo-images/IDN/WM/18732/850/FR/L/Yv1HAi.jpeg'}} style={{height: 75, width: "auto", flex: 1}}></Image>
                                     </Col>
-                                    <Col style={{...spacingStyle.mlThree}}>
-                                        <Text>
-                                            Bandung 21:00
-                                        </Text>
+    
+                                    <Col>
+                                        <Col style={{...spacingStyle.mlThree}}>
+                                            <Text>
+                                                From : 
+                                            </Text>
+                                        </Col>
+                                        <Col style={{...spacingStyle.mlThree}}>
+                                            <Text>
+                                                Bandung 21:00
+                                            </Text>
+                                        </Col>
                                     </Col>
-                                </Col>
+                                    
+    
+                                    <Col>
+                                        <Col style={{...spacingStyle.mlThree}}>
+                                            <Text>
+                                                To : 
+                                            </Text>
+                                        </Col>
+                                        <Col style={{...spacingStyle.mlThree}}>
+                                            <Text>
+                                                Surabaya  11:00
+                                            </Text>
+                                        </Col>
+                                    </Col>
+                                </Grid>
                                 
-
-                                <Col>
-                                    <Col style={{...spacingStyle.mlThree}}>
-                                        <Text>
-                                            To : 
-                                        </Text>
-                                    </Col>
-                                    <Col style={{...spacingStyle.mlThree}}>
-                                        <Text>
-                                            Surabaya  11:00
-                                        </Text>
-                                    </Col>
-                                </Col>
-                            </Grid>
-                            
-                        </Body>
-                        </CardItem>
-
-                        <CardItem footer style={{...spacingStyle.mtOne}}>
-                            <Text style={{...typoStyle.fsBold}}>
-                                Rp. 225.000
-                            </Text>
-                        </CardItem>
-                    </Card>
-
-
-
+                            </Body>
+                            </CardItem>
+    
+                            <CardItem footer style={{...spacingStyle.mtOne}}>
+                                <Text style={{...typoStyle.fsBold}}>
+                                    Rp. 225.000
+                                </Text>
+                            </CardItem>
+                        </Card>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+                    </View>
+                    
+                </Content>
+            </Container>
+        )
 
 
+    // }
 
 
-
-
-
-
-                </View>
-                
-            </Content>
-        </Container>
-    )
+    
 }
 
 export default ShuttlesList
