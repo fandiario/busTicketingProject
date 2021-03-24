@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react'
-// import { Button, Text, TextInput, View } from 'react-native'
+import Axios from "axios"
 import Icon from "react-native-vector-icons/FontAwesome"
 import { Button, Container, Content, Footer, Form, Label, Item, Input, Text, View, Row, Grid, Col, H2 } from 'native-base'
 
@@ -10,27 +10,69 @@ import spacingStyle from "../../Supports/Styles/Spacing"
 import typoStyle from "../../Supports/Styles/Typography"
 import borderStyle from "../../Supports/Styles/Border"
 
+// Link API
+import { urlAPI } from "../../Supports/Constants/urlAPI"
 
-const Login = ({navigation: {navigate}}) => {
+// Redux
+import { connect } from "react-redux"
+import { onUserLogin } from "./../../Redux/Actions/userAction"
+
+
+const Login = ({navigation: {navigate}, onUserLogin, user}) => {
 
     const [inputUser, setInputUser] = useState (
         {
             email: "",
             password: "",
-            error: ""
+            error: null
         }
     )
 
     const onEmailValidation = (input) => {
+        // console.log ("checkEmailValid")
+        Axios.get (urlAPI + `/users?email=${input}`)
 
-    }
+        .then ((res) => {
+            // console.log (res.data)
+            if (res.data.length > 0) {
+                setInputUser ({...inputUser, email: input, error: null})
+
+            } else {
+                setInputUser ({...inputUser, error: "Invalid email account"})
+            }
+        })
+
+        .catch ((err) => {
+            console.log (`from login : ${err}`)
+        })
+    }   
 
     const onPasswordValidation = (input) => {
+        // console.log (`check passValid: ${inputUser.email}`)
+        Axios.get (urlAPI + `/users?email=${inputUser.email}`)
 
+        .then ((res) => {
+            // console.log (res.data[0].password)
+            if (res.data.length > 0) {
+                if (res.data[0].password === input) {
+                    setInputUser ({...inputUser, password: input, error: null})
+
+                } else {
+                    setInputUser ({...inputUser, error: "Invalid password"})
+                }
+
+            } else {
+                setInputUser ({...inputUser, error: "Invalid password"})
+            }
+        })
+
+        .catch ((err) => {
+            console.log (err)
+        })
     }
 
-    const onLogin = () => {
-        
+    const submitLogin = () => {
+        onUserLogin (inputUser.email, inputUser.password)
     }
 
     return (
@@ -44,20 +86,40 @@ const Login = ({navigation: {navigate}}) => {
                 <Form style={{...spacingStyle.myFive}}>
                     <Item floatingLabel>
                         <Label>Email</Label>
-                        <Input name="email"></Input>
+                        <Input name="email" onChangeText={(input) => onEmailValidation (input)}></Input>
                     </Item>
 
                     <Item floatingLabel>
                         <Label>Password</Label>
-                        <Input name="password"></Input>
+                        <Input secureTextEntry={true} name="password" onChangeText={(input) => onPasswordValidation (input)}></Input>
                     </Item>
                 </Form>
+
+                <View style={{...spacingStyle.mtThree, alignItems:"center"}}>
+                    
+                        <Text style={{ ...colorStyle.danger, }}>
+                            {inputUser.error}
+                        </Text>
+                    
+                    {
+                        user.error ?
+                            <View style={{...colorStyle.bgDanger, ...borderStyle.borderRadSix, ...borderStyle.borderWarning}}>
+                                <Text style={{ ...colorStyle.light, ...spacingStyle.pThree}}>
+                                    {user.error}
+                                </Text>
+                            </View>
+                        :
+
+                            null
+                    }
+
+                </View>
 
                 <Text style={{textAlign: "right" , ...spacingStyle.myOne, ...spacingStyle.mrThree, ...colorStyle.secondary,...typoStyle.fsTwo}}>
                     Forgot your Password ?
                 </Text>
 
-                <Button rounded block style={{...colorStyle.bgPrimary,  ...spacingStyle.mtThree}}>
+                <Button rounded block style={{...colorStyle.bgPrimary,  ...spacingStyle.mtThree}} onPress={submitLogin}>
                     <Text style={{...colorStyle.light}}>
                         Log In
                     </Text>
@@ -99,80 +161,14 @@ const Login = ({navigation: {navigate}}) => {
   
 }
 
-// From Lecture
-// const Login = () => {
-//     return (
-//         <Container>
-//             <Content>
-//                 <Grid>
-//                     <Col>
-//                         <Icon name="chevron-circle-left"/>
-//                     </Col>
-//                 </Grid>
+const mapDispatchToProps = {
+    onUserLogin
+}
 
-//                 <Grid>
-//                     {/* Grid seperti div yang sudah di pakai flex */}
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
 
-//                     <Row style={{...spacingStyle.plFive, ...spacingStyle.ptFive}}>
-//                         <Text style={{...typoStyle.fsFive, ...typoStyle.fsBold}}>
-//                             Sign In
-//                         </Text>
-//                     </Row>
-
-//                     <Row style={{...spacingStyle.plFive, ...spacingStyle.ptFive}}>
-//                         <Text style={{...typoStyle.fsFive, ...typoStyle.fsBold}}>
-//                             Welcome
-//                         </Text>
-//                     </Row>
-//                 </Grid>
-         
-//             </Content>
-//         </Container>
-//     )
-// }
-
-
-// Without Native Base
-// const Login = ({navigation: {navigate}}) => {
-//     return (
-//         <View style={{...spacingStyle.mxThree, ...spacingStyle.mtFive, alignContent: "space-between"}}>
-//             <Text style={{...typoStyle.fsFive, fontWeight: "bold"}}>
-//                 Login Page
-//             </Text>
-
-//             <View style={{...spacingStyle.myFive}}> 
-//                 <TextInput placeholder="Email" style={{...spacingStyle.mbOne, ...borderStyle.borderDark, ...borderStyle.borderWidthTwo, ...borderStyle.borderRadFive}}></TextInput>
-//                 <TextInput placeholder="Password" style={{...spacingStyle.mbOne, ...borderStyle.borderDark, ...borderStyle.borderWidthTwo, ...borderStyle.borderRadFive}}></TextInput>
-//             </View>
-
-//             <View>
-//                 <View>
-//                     <Button title="Log In" color="#d35400"></Button>
-//                 </View>
-
-//                 <Text style={{...spacingStyle.myThree, justifyContent:"center", alignSelf:"center"}}>
-//                     Or Log In with
-//                 </Text>
-
-//                 <View style={{...spacingStyle.mbTwo}}>
-//                     {/* <Icon name="google" color="black" size={20}></Icon> */}
-//                     <Button title="Google"></Button>
-//                 </View>
-
-//                 <View style={{...spacingStyle.mbFive}}>
-//                     {/* <Icon name="facebook" color="white" size={20}></Icon> */}
-//                     <Button title="Facebook" color="#0652DD"></Button>
-//                 </View>
-//             </View>
-
-//             <View style={{...spacingStyle.mtFive}}>
-//                 <Text onPress={() => navigate ("Register")}>
-//                     Haven't registered yet ?
-//                 </Text>
-//             </View>
-            
-//         </View>
-//     )
-// }
-
-export default Login
+export default connect (mapStateToProps, mapDispatchToProps) (Login)

@@ -4,6 +4,7 @@ const primary = "#d35400"
 const secondary = "#0652DD"
 const warning = "#C4E538"
 const danger = "#7E191B"
+const disabled = "#00d2d3"
 const light = "#f5f6fa"
 const dark = "#2f3640"
 
@@ -25,6 +26,9 @@ const color = StyleSheet.create ({
 
     bgDanger: { backgroundColor: danger },
     danger: { color: danger },
+
+    bgDisabled: { backgroundColor: disabled },
+    disabled: { color: disabled },
 
 
 })

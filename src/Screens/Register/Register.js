@@ -1,9 +1,6 @@
 import React, { Component, useState } from 'react'
-// import { Button, Text, TextInput, View } from 'react-native'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { Button, Container, Content, Footer, Form, H2, Label, Item, Input, Text, View } from 'native-base'
-
-
 
 // Import CSS
 import colorStyle from "../../Supports/Styles/Color"
@@ -11,7 +8,12 @@ import spacingStyle from "../../Supports/Styles/Spacing"
 import typoStyle from "../../Supports/Styles/Typography"
 import borderStyle from "../../Supports/Styles/Border"
 
-const Register = ({navigation: {navigate}}) => {
+
+// Redux
+import { connect } from "react-redux"
+import { onUserRegister } from "./../../Redux/Actions/userAction"
+
+const Register = ({navigation: {navigate}, onUserRegister, user}) => {
 
     const [inputUser, setInputUser] = useState (
         {
@@ -26,7 +28,7 @@ const Register = ({navigation: {navigate}}) => {
 
         if (regex.test (input)) {
             setInputUser ({...inputUser, email: input, error: ""})  
-            console.log (inputUser.email)         
+            // console.log (inputUser.email)         
         
         } else {
             setInputUser ({...inputUser, error: "Invalid email address"})
@@ -49,8 +51,8 @@ const Register = ({navigation: {navigate}}) => {
 
     }
 
-    const onRegister = () => {
-        
+    const submitRegister = () => {
+        onUserRegister (inputUser.email, inputUser.password)
     }
 
     return (
@@ -70,7 +72,7 @@ const Register = ({navigation: {navigate}}) => {
 
                     <Item floatingLabel>
                         <Label>Password</Label>
-                        <Input name="password" onChangeText={(input) => onPasswordValidation (input)}></Input>
+                        <Input secureTextEntry={true} name="password" onChangeText={(input) => onPasswordValidation (input)}></Input>
                     </Item>
 
                     {/* <Item floatingLabel>
@@ -81,12 +83,15 @@ const Register = ({navigation: {navigate}}) => {
 
                 <View style={{...spacingStyle.mtThree, alignItems:"center"}}>
                     
-
+                        <Text style={{ ...colorStyle.danger, }}>
+                            {inputUser.error}
+                        </Text>
+                    
                     {
-                        inputUser.error ?
+                        user.error ?
                             <View style={{...colorStyle.bgDanger, ...borderStyle.borderRadSix, ...borderStyle.borderWarning}}>
                                 <Text style={{ ...colorStyle.light, ...spacingStyle.pThree}}>
-                                    {inputUser.error}
+                                    {user.error}
                                 </Text>
                             </View>
                         :
@@ -96,11 +101,24 @@ const Register = ({navigation: {navigate}}) => {
 
                 </View>
 
-                <Button rounded block style={{...colorStyle.bgPrimary,  ...spacingStyle.mtThree}}>
-                    <Text style={{...colorStyle.light}}>
-                        Submit
-                    </Text>
-                </Button>
+                {
+                    user.loading ?
+
+                    <Button disabled rounded block style={{...colorStyle.bgDisabled,  ...spacingStyle.mtThree}} onPress={submitRegister}>
+                        <Text style={{...colorStyle.light}}>
+                            Submitting Data
+                        </Text>
+                    </Button>
+
+                    :
+
+                    <Button rounded block style={{...colorStyle.bgPrimary,  ...spacingStyle.mtThree}} onPress={submitRegister}>
+                        <Text style={{...colorStyle.light}}>
+                            Register
+                        </Text>
+                    </Button>
+                }
+                
 
                 <View style={{justifyContent: "center", alignItems:"center", ...spacingStyle.myFive}}>
                     <Text>
@@ -138,47 +156,14 @@ const Register = ({navigation: {navigate}}) => {
   
 }
 
-// const Register = ({navigation: {navigate}}) => {
-//     return (
-//         <View style={{...spacingStyle.mxThree, ...spacingStyle.mtFive, alignContent: "space-between"}}>
-//             <Text style={{...typoStyle.fsFive, fontWeight: "bold"}}>
-//                 Register Page
-//             </Text>
+const mapDispatchToProps = {
+    onUserRegister
+}
 
-//             <View style={{...spacingStyle.myFive}}> 
-//                 <TextInput placeholder="Email" style={{...spacingStyle.mbOne, ...borderStyle.borderDark, ...borderStyle.borderWidthTwo, ...borderStyle.borderRadFive}}></TextInput>
-//                 <TextInput placeholder="Password" style={{...spacingStyle.mbOne, ...borderStyle.borderDark, ...borderStyle.borderWidthTwo, ...borderStyle.borderRadFive}}></TextInput>
-//                 <TextInput placeholder="Confirm Password" style={{...spacingStyle.mbOne, ...borderStyle.borderDark, ...borderStyle.borderWidthTwo, ...borderStyle.borderRadFive}}></TextInput>
-//             </View>
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+}
 
-//             <View>
-//                 <View>
-//                     <Button title="Submit" color="#d35400"></Button>
-//                 </View>
-
-//                 <Text style={{...spacingStyle.myThree, justifyContent:"center", alignSelf:"center"}}>
-//                     Or Log In with
-//                 </Text>
-
-//                 <View style={{...spacingStyle.mbTwo}}>
-//                     {/* <Icon name="google" color="black" size={20}></Icon> */}
-//                     <Button title="Google"></Button>
-//                 </View>
-
-//                 <View style={{...spacingStyle.mbFive}}>
-//                     {/* <Icon name="facebook" color="white" size={20}></Icon> */}
-//                     <Button title="Facebook" color="#0652DD"></Button>
-//                 </View>
-//             </View>
-
-//             <View style={{...spacingStyle.mtFive}}>
-//                 <Text onPress={() => navigate ("Login")}>
-//                     Already Have an Account ?
-//                 </Text>
-//             </View>
-            
-//         </View>
-//     )
-// }
-
-export default Register
+export default connect (mapStateToProps, mapDispatchToProps) (Register)
