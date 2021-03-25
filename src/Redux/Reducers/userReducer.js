@@ -18,6 +18,9 @@ const userReducer = (state = initState, action) => {
         case "LOGIN_SUCCESS": 
             return {id: action.payload, error: "", loading: null}
 
+        case "LOGIN_FAILED":
+            return {...state, error: action.payload, loading: null}
+
         case "LOGOUT_SUCCESS":
             return {id: "", error: "", loading: null}
 

@@ -36,14 +36,23 @@ const Register = ({navigation: {navigate}, onUserRegister, user}) => {
     }
 
     const onPasswordValidation = (input) => {
-        let symbol = /[!@#$%^&*]/
+        let symbol = /[!@$%^*]/
+        let notsymbol = /[#&]/
+
+        if (notsymbol.test (input)) {
+            return setInputUser ({...inputUser, error: "Password must not contain symbol # and &"})
+        }
+
+        if (symbol.test (input[input.length - 1]) || symbol.test (input[0])) {
+            return setInputUser ({...inputUser, error: "Password must not first character or last character must not !, @, $, %, ^  or *"})
+        }
 
         if (input.length < 6) {
             return setInputUser({...inputUser, error:"Min. length of password is 6 characters"})
         }
 
         if (!symbol.test (input)) {
-            return setInputUser ({...inputUser, error: "Password must include !, @, #, $, %, ^, & or *"})
+            return setInputUser ({...inputUser, error: "Password must include !, @, $, %, ^ or *"})
 
         } else {
             setInputUser ({...inputUser, password: input, error: ""})

@@ -14,11 +14,11 @@ import borderStyle from "../../Supports/Styles/Border"
 import { connect } from "react-redux"
 import {onBookingSearch} from "../../Redux/Actions/searchAction"
 
-const Home = ({onBookingSearch, search}) => {
+const Home = ({navigation: {navigate}, onBookingSearch, search}) => {
 
     const [inputUser, setInputUser] = useState (
         {
-            type: null,
+            // type: null,
             from: null,
             to: null,
             date: null,
@@ -26,9 +26,20 @@ const Home = ({onBookingSearch, search}) => {
         }
     )
 
+    const [searchError, setSearchError] = useState ("")
+
     const submitSearch = () => {
-        // console.log (inputUser)
-        onBookingSearch (inputUser)
+        
+        if (inputUser.from && inputUser.to && inputUser.date && inputUser.numSeat) {
+            // console.log (inputUser)
+            onBookingSearch (inputUser)
+            navigate ("ShuttlesList", {data: inputUser})
+            setSearchError ("")
+        
+        } else {
+            return setSearchError ("Please fill every data field")
+        }
+       
     }
 
     return (
@@ -43,7 +54,7 @@ const Home = ({onBookingSearch, search}) => {
                 </Grid>
 
                 <Form style={{...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderRadThree, ...spacingStyle.myFive}}>
-                    <Item stackedLabel>
+                    {/* <Item stackedLabel>
                         <Label style={{...typoStyle.fsBold}}>Shuttle Type :</Label>
                         <Picker
                             selectedValue={"-Choose-"}
@@ -56,7 +67,7 @@ const Home = ({onBookingSearch, search}) => {
                             <Picker.Item label="Bus" value="Bus" />
                             <Picker.Item label="Travel" value="Travel" />
                             </Picker>
-                    </Item>
+                    </Item> */}
                     <Item stackedLabel style={{...spacingStyle.mtOne}}>
                         <Label style={{...typoStyle.fsBold}}>From :</Label>
                         <Input onChangeText={(input) => setInputUser({...inputUser, from: input})}></Input>
@@ -71,7 +82,7 @@ const Home = ({onBookingSearch, search}) => {
                             <Label style={{...typoStyle.fsBold}}>Date :</Label>
                             <DatePicker
                                 style={{width: 200}}
-                                date={new Date ()}
+                                date={inputUser.date}
                                 mode="date"
                                 placeholder="select date"
                                 format="DD-MM-YYYY"
@@ -124,8 +135,10 @@ const Home = ({onBookingSearch, search}) => {
 
                 <Grid style={{...spacingStyle.myThree, ...spacingStyle.mlThree}}>
                     <Row>
-                        <Text style={{...typoStyle.fsBold}}>
-                            Result :
+                        <Text style={{...colorStyle.danger, ...typoStyle.fsItalic, textAlign:"center"}}>
+                            {
+                                searchError
+                            }
                         </Text>
                     </Row>
 

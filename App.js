@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 import "react-native-gesture-handler"
 import { NavigationContainer } from "@react-navigation/native"
@@ -24,15 +24,20 @@ import { connect } from "react-redux"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { onSaveAsyncStorage } from "./src/Redux/Actions/userAction"
 
+import Splash from "./src/Screens/Splash/Splash"
+
 // const store = createStore (allReducer, applyMiddleware (thunk))
 
 const App = ({user, onSaveAsyncStorage}) => {
+
+  const [isLogin, setLogin] = useState (false)
 
   const getAsyncStorageData = () => {
     AsyncStorage.getItem ("id")
 
     .then ((res) => {
       onSaveAsyncStorage (res)
+      setLogin (true)
       console.log (`id: ${res}`)
     })
 
@@ -45,30 +50,40 @@ const App = ({user, onSaveAsyncStorage}) => {
     getAsyncStorageData()
   }, [])
 
-  return (
+  if (isLogin === false) {
+    return (
+      <Splash></Splash>
+    )
+  
+  } else {
+
+    return (
     
-    // <Provider store= {store}>
-    //   <NavigationContainer>
+      // <Provider store= {store}>
+      //   <NavigationContainer>
+        
+      //     {/* <MainNavigation></MainNavigation> */}
+      //     <RegisterNavigation></RegisterNavigation>
+  
+      //   </NavigationContainer>
+      // </Provider>
+  
+      <NavigationContainer>
+  
+        {
+          user.id ?
+  
+            <MainNavigation></MainNavigation>
+          :
+            <RegisterNavigation></RegisterNavigation>
+        }
+  
+      </NavigationContainer>
       
-    //     {/* <MainNavigation></MainNavigation> */}
-    //     <RegisterNavigation></RegisterNavigation>
+    )
+  }
 
-    //   </NavigationContainer>
-    // </Provider>
-
-    <NavigationContainer>
-
-      {
-        user.id ?
-
-          <MainNavigation></MainNavigation>
-        :
-          <RegisterNavigation></RegisterNavigation>
-      }
-
-    </NavigationContainer>
-    
-  )
+  
 }
 
 // export default App

@@ -1,8 +1,8 @@
 export const onBookingSearch = (input) => {
 
-    console.log (input)
-
     return (dispatch) => {
+        // console.log (`fromsearch action`)
+        console.log (input)
         dispatch (
             {
                 type: "ON_SEARCH_BOOKING",

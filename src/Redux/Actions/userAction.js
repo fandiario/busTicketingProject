@@ -90,12 +90,22 @@ export const onUserLogin = (inputEmail, inputPassword) => {
             })
 
             .catch ((errAsyncStorage) => {
-                console.log (errAsyncStorage)
+                dispatch (
+                    {
+                        type: "LOGIN_FAILED",
+                        payload: errAsyncStorage
+                    }
+                )
             })
         })
 
         .catch ((err) => {
-            console.log (err)
+            dispatch (
+                {
+                    type: "LOGIN_FAILED",
+                    payload: err
+                }
+            )
         })
     }
 }

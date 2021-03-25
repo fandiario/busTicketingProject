@@ -2,10 +2,10 @@ import React from "react"
 import { createBottomTabNavigator } from"@react-navigation/bottom-tabs"
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import Home from "../src/Screens/Home/Home"
+import Homenavigator from "./HomeRouter"
 import Profile from "../src/Screens/Profile/Profile"
 import BookingHistory from "../src/Screens/BookingHistory/BookingHistory"
-import ShuttlesList from "../src/Screens/ShuttlesList/ShuttlesList"
+// import ShuttlesList from "../src/Screens/ShuttlesList/ShuttlesList"
 
 const Tab = createBottomTabNavigator ()
 const MainRouter = () => {
@@ -17,7 +17,7 @@ const MainRouter = () => {
             size: 5
             }}
         >   
-            <Tab.Screen name="Home" component={Home}
+            <Tab.Screen name="HomeNavigator" component={Homenavigator}
                 options={{tabBarIcon: ({color, size}) => {
                     return (
                         <Icon name="home" color={color} size={size}></Icon>
@@ -25,14 +25,14 @@ const MainRouter = () => {
                 }
             }}
             ></Tab.Screen>
-            <Tab.Screen name="Shuttles" component={ShuttlesList}
+            {/* <Tab.Screen name="Shuttles" component={ShuttlesList}
                 options={{tabBarIcon: ({color, size}) => {
                     return (
                         <Icon name="bus" color={color} size={size}></Icon>
                     )
                 }
             }}
-            ></Tab.Screen>
+            ></Tab.Screen> */}
             <Tab.Screen name="Profile" component={Profile}
                 options={{tabBarIcon: ({color, size}) => {
                     return (

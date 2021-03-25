@@ -3,21 +3,21 @@
     {
       "id": 1,
       "email": "isthisemailvalid@email.com",
-      "password": "user#01"
+      "password": "user*01"
     },
     {
       "id": 2,
       "email": "isthisemailregistered@email.com",
-      "password": "user#02"
+      "password": "user*02"
     },
     {
       "id": 3,
       "email": "user03@email.com",
-      "password": "user#03"
+      "password": "user*03"
     },
     {
       "email": "user04@email.com",
-      "password": "user#04",
+      "password": "user*04",
       "id": 4
     }
   ],
@@ -26,10 +26,13 @@
       "id": 1,
       "type": "Bus",
       "name": "Pahala Kencana",
-      "from": "Bandung 11:00",
-      "to": "Surabaya  23:45",
+      "from": "Bandung",
+      "to": "Surabaya",
       "class": "Executive",
       "price": 275000,
+      "timeDeparture": "11:00",
+      "timeArrival": "23:45",
+      "travelTime":"12h 45m",
       "seat": [
         "1A",
         "1B",
@@ -79,10 +82,13 @@
       "id": 2,
       "type": "Bus",
       "name": "Sugeng Rahayu",
-      "from": "Bandung 21:00",
-      "to": "Surabaya  11:00",
+      "from": "Bandung",
+      "to": "Surabaya",
       "class": "Executive",
       "price": 225000,
+      "timeDeparture": "21:00",
+      "timeArrival": "11:00",
+      "travelTime":"13h 00m",
       "seat": [
         "1A",
         "1B",
@@ -132,10 +138,13 @@
       "id": 3,
       "type": "Bus",
       "name": "Eka Cepat",
-      "from": "Bandung 20:00",
-      "to": "Surabaya  10:00",
+      "from": "Bandung",
+      "to": "Surabaya",
       "class": "Executive",
       "price": 225000,
+      "timeDeparture": "20:00",
+      "timeArrival": "10:00",
+      "travelTime":"13h 00m",
       "seat": [
         "1A",
         "1B",
@@ -185,10 +194,13 @@
       "id": 4,
       "type": "Travel",
       "name": "Jackal Holiday",
-      "from": "Bandung 07:30",
-      "to": "Tangerang  11:30",
+      "from": "Bandung",
+      "to": "Tangerang",
       "class": "Executive",
       "price": 125000,
+      "timeDeparture": "07:30",
+      "timeArrival": "11:30",
+      "travelTime":"4h 00m",
       "seat": [
         "1A",
         "1B",
@@ -214,10 +226,13 @@
       "id": 5,
       "type": "Travel",
       "name": "DayTrans",
-      "from": "Bandung 12:00",
-      "to": "Tangerang  17:00",
+      "from": "Bandung",
+      "to": "Tangerang",
       "class": "Executive",
       "price": 105000,
+      "timeDeparture": "12:00",
+      "timeArrival": "16:00",
+      "travelTime":"4h 00m",
       "seat": [
         "1A",
         "1B",
@@ -263,7 +278,7 @@
     },
     {
       "id": 5,
-      "facility": "Lugage Storage",
+      "facility": "Luggage Storage",
       "image": "https://www.flaticon.com/svg/vstatic/svg/4164/4164916.svg?token=exp=1616259493~hmac=835794a1b4400b6eed7a34b61ddc4a07"
     }
   ]
