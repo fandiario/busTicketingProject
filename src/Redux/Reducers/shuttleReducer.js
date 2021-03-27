@@ -2,7 +2,8 @@ let initialState = {
     shuttleList: null,
     errorList: null,
     shuttleDetail: null,
-    errorDetail: null
+    errorDetail: null,
+    seatBooked: []
 }
 
 const shuttlesReducer = (state = initialState, action) => {
@@ -19,6 +20,9 @@ const shuttlesReducer = (state = initialState, action) => {
 
         case "GET_DATA_DETAIL_FAILED" :
             return {...state, shuttleDetail: null, errorDetail: action.payload}
+
+        case "GET_DATA_SEAT_BOOKED" :
+            return {...state, seatBooked: action.payload}
 
         default: 
             return state

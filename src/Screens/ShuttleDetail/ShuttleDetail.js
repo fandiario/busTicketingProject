@@ -1,7 +1,7 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { connect } from "react-redux"
-import { Container, Col, Content, Grid, H1, H2, Row, Spinner, Text, View } from "native-base"
-import { Image } from "react-native"
+import { Container, Col, Content, Grid, H1, H2, Row, Spinner, Text, View, Button, Toast, Footer } from "native-base"
+import { Image, ToastAndroid, TouchableOpacity } from "react-native"
 
 // Import CSS
 import colorStyle from "../../Supports/Styles/Color"
@@ -10,20 +10,70 @@ import typoStyle from "../../Supports/Styles/Typography"
 import borderStyle from "../../Supports/Styles/Border"
 
 // Redux
-import {getShuttleDetail} from "../../Redux/Actions/shuttleAction"
+import {getShuttleDetail, getBookedSeat} from "../../Redux/Actions/shuttleAction"
 
 // Icon
 import Icon from "react-native-vector-icons/FontAwesome"
 
-const ShuttleDetail = ({navigation, route, getShuttleDetail, shuttles}) => {
+const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shuttles, search}) => {
+
+    const [inputBookingSeat, setBookingSeat] = useState ([]) 
+    const [totalPrice, setTotalPrice] = useState (0)
 
     useEffect (() => {
         let idShuttle = route.params.id
-        // console.log (idShuttle)
+        let departureDate = search.date
+        
         getShuttleDetail (idShuttle)
+        getBookedSeat (idShuttle, departureDate)
     }, [])
 
-    if (shuttles.shuttleDetail === null) {
+    useEffect (() => {
+        calculateTotalPrice ()
+    }, [inputBookingSeat])
+
+    const setSeatBooking = (input, lim) => {
+
+        if (inputBookingSeat.length < lim) {
+            setBookingSeat([...inputBookingSeat, input])
+
+        } else {
+
+            // Toast.show ({
+            //     text: "You have meet your maximum seat reservation",
+            //     buttonText: "Ok",
+            //     position: "bottom",
+            //     duration: 3000
+
+            // })
+
+            ToastAndroid.showWithGravity (
+                "You have meet your maximum seat reservation",
+                ToastAndroid.LONG,
+                ToastAndroid.CENTER
+            )
+        }
+       
+    }
+
+    const resetSeatBooking = () => {
+        setBookingSeat ([])
+    }
+
+    const calculateTotalPrice = () => {
+        let numSeat = inputBookingSeat.length
+        let price = shuttles.shuttleDetail.price
+        let result = numSeat * price
+
+        setTotalPrice (result)
+    }
+
+   
+
+   
+
+
+    if (shuttles.shuttleDetail === null || shuttles.seatBooked === null || inputBookingSeat === null || shuttles.shuttleDetail.price === null) {
         return (
             <Container>
                 <Grid style={{...colorStyle.bgPrimary}}>
@@ -91,9 +141,6 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, shuttles}) => {
                         </Col>
 
                         <Col style={{flex: 1, ...spacingStyle.mxTwo, ...spacingStyle.myThree}}>
-                            {/* <Text>
-                                Tes
-                            </Text> */}
                             <Image source={{uri: shuttles.shuttleDetail.image3 }} style={{height: 100, width: "auto", flex: 1}}></Image>
                         </Col>
                     </Row>
@@ -124,7 +171,7 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, shuttles}) => {
                     <Row style={{...spacingStyle.mtThree, ...spacingStyle.mxTwo}}>
                         
                         <Text style={{...typoStyle.fsBold, ...typoStyle.fsFive}}>
-                           Price : Rp. {shuttles.shuttleDetail.price}
+                           Price : Rp. {shuttles.shuttleDetail.price} / seat
                         </Text>
         
                     </Row>
@@ -153,301 +200,164 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, shuttles}) => {
         
                     </Row>
 
+                    {/* <Row>
+                        <Button onPress={() => console.log (shuttles.seatBooked)}>
+                            <Text>
+                                Test
+                            </Text>
+                        </Button>
+                    </Row> */}
+                    
+                    
+
                     <Row style={{...spacingStyle.mtThree, ...spacingStyle.mxTwo}}>
                         
-                        <Col>
+                        <Col style={{flex: 7}}>
                             <Text style={{...typoStyle.fsBold}}>
                                 Available Seat: 
                             </Text>
                         </Col>
+
+                        <Col style={{flex: 3}}>
+                            <Button rounded style={{...colorStyle.bgPrimary,alignSelf:"flex-end", height: 25}} onPress={resetSeatBooking}>
+                                <Text style={{...colorStyle.light, ...typoStyle.fsOne}}>
+                                    Reset 
+                                </Text>
+                            </Button>
+                        </Col>
         
                     </Row>
 
+                    <Row style={{...spacingStyle.mtThree, ...spacingStyle.mxFive, ...spacingStyle.pxFive, ...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderRadThree}}>
+                        <Col style={{justifyContent: "center", alignItems:"center"}}>
+                            <Icon name="arrow-up" size={15}></Icon>
+                            <Text>
+                                Front
+                            </Text>
+                        </Col>
+                    </Row>
+
+
+
+                    <Grid style={{...spacingStyle.mtOne, ...spacingStyle.mxFive, ...spacingStyle.pxFive, ...spacingStyle.pyFive, flexWrap: "wrap", ...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderRadThree}}>
+
+                        {
+                            shuttles.shuttleDetail.seat.map ((el, i) => {
+                                return (
+                                    <Col key={i} style={{width: '25%', alignItems: 'center', ...spacingStyle.mbTwo}}>
+                                        
+                                        {
+                                            shuttles.seatBooked.includes (el) ?
+
+                                                <View style={{justifyContent: "center", alignItems:"center"}}>
+                                                    <Icon name="times" size={15} style={{...spacingStyle.mOne}}></Icon>
+                                                    <Text>
+                                                        Booked
+                                                    </Text>
+
+                                                </View>
+                                            :
+
+                                                inputBookingSeat.includes (el) ?
+
+                                                // <TouchableOpacity style={{...colorStyle.bgDisabled}} onPress={() => setSeatBooking (null, search.seat)}>
+                                                //     <Text style={{...colorStyle.light}}>
+                                                //         {el}
+                                                //     </Text>
+                                                // </TouchableOpacity>
+                                                
+                                                    <Button style={{...colorStyle.bgDisabled}}>
+                                                        <Text style={{...colorStyle.light}}>
+                                                            {el}
+                                                        </Text>
+                                                    </Button>
+
+                                                :
+                                                // <TouchableOpacity style={{...colorStyle.bgDisabled}} onPress={() => setSeatBooking (el, search.seat)}>
+                                                //     <Text style={{...colorStyle.light}}>
+                                                //         {el}
+                                                //     </Text>
+                                                // </TouchableOpacity>
+
+                                                    <Button transparent onPress={() => setSeatBooking (el, search.seat)}>
+                                                        <Text style={{...colorStyle.dark}}>
+                                                            {el}
+                                                        </Text>
+                                                    </Button>
+                                        }
+                                    </Col>
+                                )
+                            })
+                        }
+                    </Grid>       
+
                     {
-                        shuttles.shuttleDetail.type === "Bus" ?
+                        inputBookingSeat[0] ?
 
-                        <View style={{...spacingStyle.mtOne, ...spacingStyle.mxTwo, ...spacingStyle.mbThree, ...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderRadThree}}>
-                        
-                            <Row>
-                                <Col>
-                                    <Text>
-                                        1A
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        2A
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        3A
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        4A
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        5A
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        6A
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        7A
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        8A
-                                    </Text>
-                                </Col>
-                            </Row>
+                            <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree}}>
 
-                            <Row>
-                                <Col>
-                                    <Text>
-                                        1B
+                                <Row>
+                                    
+                                    <Text style={{...typoStyle.fsBold, ...spacingStyle.mrTwo}}>
+                                        Booking Seat : 
                                     </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        2B
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        3B
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        4B
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        5B
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        6B
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        7B
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        8B
-                                    </Text>
-                                </Col>
-                            </Row>
+                               
+                                    {inputBookingSeat.map ((el, i ) => {
+                                        return (
+                                            <Text key={i} style={{...spacingStyle.mrTwo}}>
+                                                {el}
+                                            </Text>
+                                        )
+                                    })}
+                                </Row>
 
-                            <Row style={{...spacingStyle.myTwo}}>
-                                <Icon name="arrow-left" size={20} style={{...spacingStyle.mrOne}}></Icon>
-                                <Text>
-                                    Front
-                                </Text>
                             </Row>
-
-                            <Row>
-                                <Col>
-                                    <Text>
-                                        1C
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        2C
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        3C
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        4C
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        5C
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        6C
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        7C
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        8C
-                                    </Text>
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col>
-                                    <Text>
-                                        1D
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        2D
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        3D
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        4D
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        5D
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        6D
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        7D
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        8D
-                                    </Text>
-                                </Col>
-                            </Row>
-            
-                        </View>
 
                         :
 
-                        <View style={{...spacingStyle.mtOne, ...spacingStyle.mxTwo, ...spacingStyle.mbThree, ...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderRadThree}}>
-                        
-                            <Row>
-                                <Col>
-                                    <Text>
-                                        1A
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        2A
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        3A
-                                    </Text>
-                                </Col>
-                            </Row>
+                            null
 
-                            <Row>
-                                <Col>
-                                    <Text>
-                                        1B
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        2B
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        3B
-                                    </Text>
-                                </Col>
-                            </Row>
+                    }         
 
-                            <Row style={{...spacingStyle.myTwo}}>
-                                <Icon name="arrow-left" size={20} style={{...spacingStyle.mrOne}}></Icon>
-                                <Text>
-                                    Front
-                                </Text>
-                            </Row>
-
-                            <Row>
-                                <Col>
-                                    <Text>
-                                        1C
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        2C
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        3C
-                                    </Text>
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col>
-                                    <Text>
-                                        1D
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        2D
-                                    </Text>
-                                </Col>
-                                <Col>
-                                    <Text>
-                                        3D
-                                    </Text>
-                                </Col>
-                            </Row>
-            
-                        </View>   
-                    }                   
-                    
                 </View>
+
+                {
+                    inputBookingSeat[0] ?
+
+                        <Row style={{...colorStyle.bgPrimary, ...spacingStyle.mtThree, alignItems:"center"}}>
+                            <Col style={{...spacingStyle.mlThree}} flex={2}>
+                                <Text style={{...colorStyle.light, ...typoStyle.fsBold}}>
+                                    Total: Rp. {totalPrice}
+                                </Text>
+                            </Col>
+
+                            <Col flex={1}>
+                                <Button>
+                                    <Text>
+                                        Proceed
+                                    </Text>
+                                    <Icon name="arrow-right" size={20} style={{...colorStyle.light, ...spacingStyle.mrFour}}></Icon>
+                                </Button>
+                            </Col>
+                        </Row>
+                    :
+                        null
+                }
+
             </Content>
+
         </Container>
     )
 }
 
 const mapDispatchToProps = {
-    getShuttleDetail 
+    getShuttleDetail, getBookedSeat 
 }
 
 const mapStateToProps = (state) => {
     return {
-        shuttles: state.shuttles
+        shuttles: state.shuttles,
+        search: state.search
     }
 }
 

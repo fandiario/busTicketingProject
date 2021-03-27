@@ -9,6 +9,9 @@ import spacingStyle from "../../Supports/Styles/Spacing"
 import typoStyle from "../../Supports/Styles/Typography"
 import borderStyle from "../../Supports/Styles/Border"
 
+// Icon
+import Icon from "react-native-vector-icons/FontAwesome"
+
 // Link API
 import {urlAPI} from "../../Supports/Constants/urlAPI"
 
@@ -62,6 +65,7 @@ const ShuttlesList = ({navigation: {navigate}, route, getShuttleList, shuttles})
                 <Content>
                     <Grid style={{...colorStyle.bgPrimary}}>
                         <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree,}}>
+                            {/* <Icon name="arrow-circle-left" size={30} style={{...colorStyle.light, ...spacingStyle.mrTwo}} onPress={() => navigation.goBack ()}></Icon> */}
                             <H1 style={{...colorStyle.light, ...typoStyle.fsBold}}>
                                 BusyBus
                             </H1>
@@ -85,6 +89,7 @@ const ShuttlesList = ({navigation: {navigate}, route, getShuttleList, shuttles})
                 <Content>
                     <Grid style={{...colorStyle.bgPrimary}}>
                         <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree,}}>
+                            {/* <Icon name="arrow-circle-left" size={30} style={{...colorStyle.light, ...spacingStyle.mrTwo}} onPress={() => navigation.goBack ()}></Icon> */}
                             <H1 style={{...colorStyle.light, ...typoStyle.fsBold}}>
                                 BusyBus
                             </H1>
@@ -112,7 +117,7 @@ const ShuttlesList = ({navigation: {navigate}, route, getShuttleList, shuttles})
 
                         shuttles.shuttleList.map ((el, i) => {
                             return (
-                                <TouchableOpacity onPress={() => onShuttleDetail ({id: el.id})} key={{i}}>
+                                <TouchableOpacity onPress={() => onShuttleDetail ({id: el.id})} key={i}>
                                     
                                     <View style={{...spacingStyle.myThree, ...spacingStyle.mxTwo, ...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderRadFour}}>
                                         

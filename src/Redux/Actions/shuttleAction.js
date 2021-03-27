@@ -37,7 +37,8 @@ export const getShuttleDetail = (id) => {
     return (dispatch) => {
         Axios.get (urlAPI + `/shuttles/${id}`)
 
-        .then ((res) => {            
+        .then ((res) => {  
+                  
             let arrShuttleFacs = []
 
             for (let i = 0; i < res.data.facility.length; i++) {
@@ -60,11 +61,6 @@ export const getShuttleDetail = (id) => {
                 })
             }
 
-            // console.log (res.data.facility)
-            console.log (`from arr = ${arrShuttleFacs}`)
-            // res.data.facility = arrShuttleFacs
-            console.log (`from res.data = ${res.data.facility}`)
-
             dispatch (
                 {
                     type: "GET_DATA_DETAIL_SUCCESS",
@@ -83,6 +79,34 @@ export const getShuttleDetail = (id) => {
                     payload: err
                 }
             )
+        })
+    }
+}
+
+export const getBookedSeat = (idShuttle, departureDate) => {
+    return (dispatch) => {
+        Axios.get (urlAPI + `/transaction?idShuttle=${idShuttle}&departureDate=${departureDate}`)
+
+        .then ((res) => { 
+            let arrSeat = []
+
+            for (let i = 0; i < res.data.length; i++) {
+
+                for (let j = 0; j < res.data[i].seat.length; j++) {
+                    arrSeat.push (res.data[i].seat[j])
+                } 
+            }
+
+            dispatch (
+                {
+                    type: "GET_DATA_SEAT_BOOKED",
+                    payload: arrSeat
+                }
+            )
+        })
+
+        .catch ((err) => {
+            console.log (err)
         })
     }
 }

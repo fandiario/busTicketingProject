@@ -281,5 +281,32 @@
       "facility": "Luggage Storage",
       "image": "https://www.flaticon.com/svg/vstatic/svg/4164/4164916.svg?token=exp=1616259493~hmac=835794a1b4400b6eed7a34b61ddc4a07"
     }
+  ],
+  "transaction": [
+    {
+      "status": "paid",
+      "idUser": 1,
+      "idShuttle":1,
+      "shuttleName": "Pahala Kencana",
+      "class": "Executive",
+      "from" : "Bandung",
+      "to" : "Surabaya",
+      "departureDate": "31-03-2021",
+      "seat": ["1A", "1B"],
+      "totalPrice": 550000
+    },
+
+    {
+      "status": "paid",
+      "idUser": 2,
+      "idShuttle":1,
+      "shuttleName": "Pahala Kencana",
+      "class": "Executive",
+      "from" : "Bandung",
+      "to" : "Surabaya",
+      "departureDate": "31-03-2021",
+      "seat": ["2A", "2B"],
+      "totalPrice": 550000
+    }
   ]
 }
