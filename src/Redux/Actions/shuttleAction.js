@@ -18,7 +18,6 @@ export const getShuttleList = (searchDeparture, searchArrival) => {
                     payload: res.data
                 }
             )
-
         })
 
         .catch ((err) => {

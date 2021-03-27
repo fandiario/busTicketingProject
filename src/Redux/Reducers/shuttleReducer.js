@@ -3,7 +3,8 @@ let initialState = {
     errorList: null,
     shuttleDetail: null,
     errorDetail: null,
-    seatBooked: []
+    seatBooked: [],
+    totalPrice: null,
 }
 
 const shuttlesReducer = (state = initialState, action) => {

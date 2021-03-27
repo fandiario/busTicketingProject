@@ -18,7 +18,7 @@ import Icon from "react-native-vector-icons/FontAwesome"
 const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shuttles, search}) => {
 
     const [inputBookingSeat, setBookingSeat] = useState ([]) 
-    const [totalPrice, setTotalPrice] = useState (0)
+    // const [totalPrice, setTotalPrice] = useState (0)
 
     useEffect (() => {
         let idShuttle = route.params.id
@@ -26,17 +26,18 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
         
         getShuttleDetail (idShuttle)
         getBookedSeat (idShuttle, departureDate)
+        
     }, [])
 
-    useEffect (() => {
-        calculateTotalPrice ()
-    }, [inputBookingSeat])
+    // useEffect (() => {
+    //     calculateTotalPrice ()
+    // }, [inputBookingSeat])
 
     const setSeatBooking = (input, lim) => {
 
         if (inputBookingSeat.length < lim) {
             setBookingSeat([...inputBookingSeat, input])
-
+            
         } else {
 
             // Toast.show ({
@@ -60,13 +61,13 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
         setBookingSeat ([])
     }
 
-    const calculateTotalPrice = () => {
-        let numSeat = inputBookingSeat.length
-        let price = shuttles.shuttleDetail.price
-        let result = numSeat * price
+    // const calculateTotalPrice = (numSeat, price) => {
+    //     // let numSeat =inputBookingSeat.length
+    //     // let price = shuttles.shuttleDetail.price
+    //     let result = numSeat * price
 
-        setTotalPrice (result)
-    }
+    //     setTotalPrice (result)
+    // }
 
    
 
@@ -207,8 +208,6 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
                             </Text>
                         </Button>
                     </Row> */}
-                    
-                    
 
                     <Row style={{...spacingStyle.mtThree, ...spacingStyle.mxTwo}}>
                         
@@ -265,7 +264,7 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
                                                 //         {el}
                                                 //     </Text>
                                                 // </TouchableOpacity>
-                                                
+
                                                     <Button style={{...colorStyle.bgDisabled}}>
                                                         <Text style={{...colorStyle.light}}>
                                                             {el}
@@ -292,7 +291,7 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
                     </Grid>       
 
                     {
-                        inputBookingSeat[0] ?
+                        inputBookingSeat[0]?
 
                             <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree}}>
 
@@ -322,24 +321,31 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
                 </View>
 
                 {
-                    inputBookingSeat[0] ?
+                    inputBookingSeat[0]?
+                        <View>
+                            {/* {
+                            calculateTotalPrice (inputBookingSeat.length, shuttles.shuttleDetail.price)
+                            } */}
 
-                        <Row style={{...colorStyle.bgPrimary, ...spacingStyle.mtThree, alignItems:"center"}}>
-                            <Col style={{...spacingStyle.mlThree}} flex={2}>
-                                <Text style={{...colorStyle.light, ...typoStyle.fsBold}}>
-                                    Total: Rp. {totalPrice}
-                                </Text>
-                            </Col>
-
-                            <Col flex={1}>
-                                <Button>
-                                    <Text>
-                                        Proceed
+                            <Row style={{...colorStyle.bgPrimary, ...spacingStyle.mtThree, alignItems:"center"}}>
+                                <Col style={{...spacingStyle.mlThree}} flex={2}>
+                                    <Text style={{...colorStyle.light, ...typoStyle.fsBold}}>
+                                        Total: Rp. {inputBookingSeat.length * shuttles.shuttleDetail.price}
                                     </Text>
-                                    <Icon name="arrow-right" size={20} style={{...colorStyle.light, ...spacingStyle.mrFour}}></Icon>
-                                </Button>
-                            </Col>
-                        </Row>
+                                </Col>
+
+                                <Col flex={1}>
+                                    <Button>
+                                        <Text>
+                                            Proceed
+                                        </Text>
+                                        <Icon name="arrow-right" size={20} style={{...colorStyle.light, ...spacingStyle.mrFour}}></Icon>
+                                    </Button>
+                                </Col>
+                            </Row>
+
+                        </View>
+                        
                     :
                         null
                 }
