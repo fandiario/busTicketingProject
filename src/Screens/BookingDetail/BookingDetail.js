@@ -20,7 +20,7 @@ import borderStyle from "../../Supports/Styles/Border"
 // Icon
 import Icon from "react-native-vector-icons/FontAwesome"
 
-const BookingDetail = ({navigation, route, onPayment, shuttles, search}) => {
+const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, shuttles, search}) => {
 
     const [contactInfo, setContactInfo] = useState (
         {
@@ -109,9 +109,9 @@ const BookingDetail = ({navigation, route, onPayment, shuttles, search}) => {
         let dataToSend = {
             status: "unpaid",
             idUser: contactInfo.idUser,
-            idShuttle: null,
-            shuttleName: null,
-            class: null,
+            idShuttle: shuttles.shuttleDetail.id,
+            shuttleName: shuttles.shuttleDetail.name,
+            class: shuttles.shuttleDetail.class,
             from: search.departure,
             to: search.arrival,
             departureDate: search.date,
@@ -120,9 +120,8 @@ const BookingDetail = ({navigation, route, onPayment, shuttles, search}) => {
             totalPrice: contactInfo.totalPrice,
             contactPhone: contactInfo.phoneUser
         }
-
         onPayment (dataToSend)
-
+        navigate ("Payment", {data: dataToSend})
 
     }
 
@@ -191,7 +190,7 @@ const BookingDetail = ({navigation, route, onPayment, shuttles, search}) => {
                         return (
                             <Form key={i} style={{...spacingStyle.mtThree, ...spacingStyle.mxThree, ...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderRadThree}}>
                                 <Item stackedLabel>
-                                    <Row style={{...spacingStyle.mlFour, ...spacingStyle.mtTwo}}>
+                                    <Row style={{ ...spacingStyle.mtTwo}}>
                                         <Col style={{flex: 2}}>
                                             <Text style={{...typoStyle.fsBold}}>
                                                 Seat : {el}
@@ -411,7 +410,7 @@ const BookingDetail = ({navigation, route, onPayment, shuttles, search}) => {
                 </View>
 
                 <View style={{...spacingStyle.mtThree, ...spacingStyle.mlThree, alignSelf:"center" }}>
-                    <Button rounded style={{...colorStyle.bgPrimary}}>
+                    <Button rounded style={{...colorStyle.bgPrimary}} onPress={proceedPayment}>
                         <Text>
                             Payment
                         </Text>

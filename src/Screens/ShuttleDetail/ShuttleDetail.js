@@ -200,7 +200,7 @@ const ShuttleDetail = ({navigation: {navigate}, navigation, route, getShuttleDet
                     </Row>
 
                     {/* <Row>
-                        <Button onPress={() => console.log (shuttles.seatBooked)}>
+                        <Button onPress={() => console.log (shuttles.shuttleDetail)}>
                             <Text>
                                 Test
                             </Text>
