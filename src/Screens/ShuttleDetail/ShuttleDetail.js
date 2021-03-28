@@ -15,23 +15,10 @@ import {getShuttleDetail, getBookedSeat} from "../../Redux/Actions/shuttleAction
 // Icon
 import Icon from "react-native-vector-icons/FontAwesome"
 
-const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shuttles, search}) => {
+const ShuttleDetail = ({navigation: {navigate}, navigation, route, getShuttleDetail, getBookedSeat, shuttles, search}) => {
 
     const [inputBookingSeat, setBookingSeat] = useState ([]) 
     // const [totalPrice, setTotalPrice] = useState (0)
-
-    useEffect (() => {
-        let idShuttle = route.params.id
-        let departureDate = search.date
-        
-        getShuttleDetail (idShuttle)
-        getBookedSeat (idShuttle, departureDate)
-        
-    }, [])
-
-    // useEffect (() => {
-    //     calculateTotalPrice ()
-    // }, [inputBookingSeat])
 
     const setSeatBooking = (input, lim) => {
 
@@ -57,21 +44,32 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
        
     }
 
+    const removeSeatBooking = (input) => {
+        let index = inputBookingSeat.indexOf (input)
+        let arrSeats = [...inputBookingSeat]
+
+        if (index !== -1) {
+            arrSeats.splice (index, 1)
+            setBookingSeat (arrSeats)
+        }
+    }
+
     const resetSeatBooking = () => {
         setBookingSeat ([])
     }
 
-    // const calculateTotalPrice = (numSeat, price) => {
-    //     // let numSeat =inputBookingSeat.length
-    //     // let price = shuttles.shuttleDetail.price
-    //     let result = numSeat * price
+    const proceedBooking = () => {
+        navigate ("BookingDetail", {seats: inputBookingSeat, price: shuttles.shuttleDetail.price})
+    }
 
-    //     setTotalPrice (result)
-    // }
-
-   
-
-   
+    useEffect (() => {
+        let idShuttle = route.params.id
+        let departureDate = search.date
+        
+        getShuttleDetail (idShuttle)
+        getBookedSeat (idShuttle, departureDate)
+        
+    }, [])
 
 
     if (shuttles.shuttleDetail === null || shuttles.seatBooked === null || inputBookingSeat === null || shuttles.shuttleDetail.price === null) {
@@ -259,24 +257,13 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
 
                                                 inputBookingSeat.includes (el) ?
 
-                                                // <TouchableOpacity style={{...colorStyle.bgDisabled}} onPress={() => setSeatBooking (null, search.seat)}>
-                                                //     <Text style={{...colorStyle.light}}>
-                                                //         {el}
-                                                //     </Text>
-                                                // </TouchableOpacity>
-
-                                                    <Button style={{...colorStyle.bgDisabled}}>
+                                                    <Button style={{...colorStyle.bgDisabled}} onPress={() => removeSeatBooking (el)}>
                                                         <Text style={{...colorStyle.light}}>
                                                             {el}
                                                         </Text>
                                                     </Button>
 
                                                 :
-                                                // <TouchableOpacity style={{...colorStyle.bgDisabled}} onPress={() => setSeatBooking (el, search.seat)}>
-                                                //     <Text style={{...colorStyle.light}}>
-                                                //         {el}
-                                                //     </Text>
-                                                // </TouchableOpacity>
 
                                                     <Button transparent onPress={() => setSeatBooking (el, search.seat)}>
                                                         <Text style={{...colorStyle.dark}}>
@@ -323,10 +310,6 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
                 {
                     inputBookingSeat[0]?
                         <View>
-                            {/* {
-                            calculateTotalPrice (inputBookingSeat.length, shuttles.shuttleDetail.price)
-                            } */}
-
                             <Row style={{...colorStyle.bgPrimary, ...spacingStyle.mtThree, alignItems:"center"}}>
                                 <Col style={{...spacingStyle.mlThree}} flex={2}>
                                     <Text style={{...colorStyle.light, ...typoStyle.fsBold}}>
@@ -335,7 +318,7 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
                                 </Col>
 
                                 <Col flex={1}>
-                                    <Button>
+                                    <Button style={{...colorStyle.bgSecondary}} onPress ={() => {proceedBooking ()}}>
                                         <Text>
                                             Proceed
                                         </Text>
@@ -357,7 +340,7 @@ const ShuttleDetail = ({navigation, route, getShuttleDetail, getBookedSeat, shut
 }
 
 const mapDispatchToProps = {
-    getShuttleDetail, getBookedSeat 
+    getShuttleDetail, getBookedSeat, 
 }
 
 const mapStateToProps = (state) => {

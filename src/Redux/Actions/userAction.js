@@ -127,3 +127,17 @@ export const onUserLogout = () => {
         })
     }
 }
+
+// export const getUserDetail = (id) => {
+//     return (dispatch) => {
+//         Axios.get (urlAPI + `/users/${id}`)
+
+//         .then ((res) => {
+//             console.log (res.data)
+//         })
+
+//         .catch ((err) => {
+//             console.log (err)
+//         })
+//     }
+// }

@@ -46,7 +46,7 @@ export const getShuttleDetail = (id) => {
                 .then ((response) => {
                     arrShuttleFacs.push(response.data.facility)
                     res.data.facility = arrShuttleFacs
-
+                    
                     dispatch (
                         {
                             type: "GET_DATA_DETAIL_SUCCESS",

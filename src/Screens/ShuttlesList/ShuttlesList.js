@@ -18,9 +18,10 @@ import {urlAPI} from "../../Supports/Constants/urlAPI"
 // Redux
 import { connect } from "react-redux"
 import { getShuttleList } from "./../../Redux/Actions/shuttleAction"
+import { onSaveAsyncStorage } from "../../Redux/Actions/userAction"
 
 
-const ShuttlesList = ({navigation: {navigate}, route, getShuttleList, shuttles}) => {   
+const ShuttlesList = ({navigation: {navigate}, navigation, route, getShuttleList, shuttles}) => {   
 
     const onShuttleDetail = (id) => {
         navigate ("ShuttleDetail", id)
@@ -65,7 +66,7 @@ const ShuttlesList = ({navigation: {navigate}, route, getShuttleList, shuttles})
                 <Content>
                     <Grid style={{...colorStyle.bgPrimary}}>
                         <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree,}}>
-                            {/* <Icon name="arrow-circle-left" size={30} style={{...colorStyle.light, ...spacingStyle.mrTwo}} onPress={() => navigation.goBack ()}></Icon> */}
+                            <Icon name="arrow-circle-left" size={30} style={{...colorStyle.light, ...spacingStyle.mrTwo}} onPress={() => navigation.goBack ()}></Icon>
                             <H1 style={{...colorStyle.light, ...typoStyle.fsBold}}>
                                 BusyBus
                             </H1>
@@ -89,7 +90,7 @@ const ShuttlesList = ({navigation: {navigate}, route, getShuttleList, shuttles})
                 <Content>
                     <Grid style={{...colorStyle.bgPrimary}}>
                         <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree,}}>
-                            {/* <Icon name="arrow-circle-left" size={30} style={{...colorStyle.light, ...spacingStyle.mrTwo}} onPress={() => navigation.goBack ()}></Icon> */}
+                            <Icon name="arrow-circle-left" size={30} style={{...colorStyle.light, ...spacingStyle.mrTwo}} onPress={() => navigation.goBack ()}></Icon>
                             <H1 style={{...colorStyle.light, ...typoStyle.fsBold}}>
                                 BusyBus
                             </H1>
@@ -233,7 +234,7 @@ const ShuttlesList = ({navigation: {navigate}, route, getShuttleList, shuttles})
 }
 
 const mapDispatchToProps = {
-    getShuttleList
+    getShuttleList, onSaveAsyncStorage
 }
 
 const mapStateToProps = (state) => {

@@ -6,6 +6,11 @@ const Two = 10
 const Three = 12
 const Four = 15
 const Five = 18
+const Six = 25
+const Seven = 30
+const Eight = 45
+const Nine = 50
+const Ten = 65
 
 
 const spacing = StyleSheet.create ({
@@ -109,6 +114,86 @@ const spacing = StyleSheet.create ({
     mrFive: {marginRight: Five},
     mxFive: {marginHorizontal: Five},
     myFive: {marginVertical: Five},
+
+    pSix : {padding: Six},
+    ptSix: {paddingTop: Six},
+    pbSix: { paddingBottom: Six},
+    plSix : {paddingLeft: Six},
+    prSix: {paddingRight: Six},
+    pxSix: {paddingHorizontal: Six},
+    pySix: {paddingVertical: Six},
+
+    mSix: {margin: Six},
+    mtSix: {marginTop: Six},
+    mbSix: { marginBottom: Six},
+    mlSix : {marginLeft: Six},
+    mrSix: {marginRight: Six},
+    mxSix: {marginHorizontal: Six},
+    mySix: {marginVertical: Six},
+
+    pSeven : {padding: Seven},
+    ptSeven: {paddingTop: Seven},
+    pbSeven: { paddingBottom: Seven},
+    plSeven : {paddingLeft: Seven},
+    prSeven: {paddingRight: Seven},
+    pxSeven: {paddingHorizontal: Seven},
+    pySeven: {paddingVertical: Seven},
+
+    mSeven: {margin: Seven},
+    mtSeven: {marginTop: Seven},
+    mbSeven: { marginBottom: Seven},
+    mlSeven : {marginLeft: Seven},
+    mrSeven: {marginRight: Seven},
+    mxSeven: {marginHorizontal: Seven},
+    mySeven: {marginVertical: Seven},
+
+    pEight : {padding: Eight},
+    ptEight: {paddingTop: Eight},
+    pbEight: { paddingBottom: Eight},
+    plEight : {paddingLeft: Eight},
+    prEight: {paddingRight: Eight},
+    pxEight: {paddingHorizontal: Eight},
+    pyEight: {paddingVertical: Eight},
+
+    mEight: {margin: Eight},
+    mtEight: {marginTop: Eight},
+    mbEight: { marginBottom: Eight},
+    mlEight : {marginLeft: Eight},
+    mrEight: {marginRight: Eight},
+    mxEight: {marginHorizontal: Eight},
+    myEight: {marginVertical: Eight},
+
+    pNine : {padding: Nine},
+    ptNine: {paddingTop: Nine},
+    pbNine: { paddingBottom: Nine},
+    plNine : {paddingLeft: Nine},
+    prNine: {paddingRight: Nine},
+    pxNine: {paddingHorizontal: Nine},
+    pyNine: {paddingVertical: Nine},
+
+    mNine: {margin: Nine},
+    mtNine: {marginTop: Nine},
+    mbNine: { marginBottom: Nine},
+    mlNine : {marginLeft: Nine},
+    mrNine: {marginRight: Nine},
+    mxNine: {marginHorizontal: Nine},
+    myNine: {marginVertical: Nine},
+
+    pTen : {padding: Ten},
+    ptTen: {paddingTop: Ten},
+    pbTen: { paddingBottom: Ten},
+    plTen : {paddingLeft: Ten},
+    prTen: {paddingRight: Ten},
+    pxTen: {paddingHorizontal: Ten},
+    pyTen: {paddingVertical: Ten},
+
+    mTen: {margin: Ten},
+    mtTen: {marginTop: Ten},
+    mbTen: { marginBottom: Ten},
+    mlTen : {marginLeft: Ten},
+    mrTen: {marginRight: Ten},
+    mxTen: {marginHorizontal: Ten},
+    myTen: {marginVertical: Ten},
 
 
 })
