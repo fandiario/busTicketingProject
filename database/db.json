@@ -316,7 +316,7 @@
       "totalPrice": 550000
     },
     {
-      "status": "unpaid",
+      "status": "paid",
       "idUser": "3",
       "emailUser": "user03@email.com",
       "idShuttle": 1,
@@ -335,32 +335,32 @@
         {
           "numSeat": "1C",
           "name": "Person1",
-          "age": "46",
+          "age": "45",
           "valid": true
         },
         {
           "numSeat": "1D",
           "name": "Person2",
-          "age": "44",
+          "age": "43",
           "valid": true
         },
         {
           "numSeat": "2C",
           "name": "Person3",
-          "age": "17",
+          "age": "16",
           "valid": true
         },
         {
           "numSeat": "2D",
           "name": "Person4",
-          "age": "15",
+          "age": "14",
           "valid": true
         }
       ],
       "totalPrice": 1100000,
       "contactPhone": "0812-xxxx-yyyy",
-      "timeExpired": "2021-03-29 23:41:27",
-      "timePaid": null,
+      "timeExpired": null,
+      "timePaid": "2021-03-30 01:10:25",
       "timeCancelled": null,
       "id": 3
     }
