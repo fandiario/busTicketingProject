@@ -109,6 +109,7 @@ const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, sh
         let dataToSend = {
             status: "unpaid",
             idUser: contactInfo.idUser,
+            emailUser: contactInfo.emailUser,
             idShuttle: shuttles.shuttleDetail.id,
             shuttleName: shuttles.shuttleDetail.name,
             class: shuttles.shuttleDetail.class,
