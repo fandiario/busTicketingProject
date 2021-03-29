@@ -1,5 +1,6 @@
 let initState = {
     id: "",
+    email: null,
     error: "",
     loading: null
 }
@@ -23,6 +24,9 @@ const userReducer = (state = initState, action) => {
 
         case "LOGOUT_SUCCESS":
             return {id: "", error: "", loading: null}
+
+        case "GET_USER_EMAIL":
+            return {...state, email: action.payload, error: "", loading: null}
 
         default:
             return state

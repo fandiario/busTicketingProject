@@ -11,6 +11,7 @@ const Seven = 30
 const Eight = 45
 const Nine = 50
 const Ten = 65
+const Twenty = 275
 
 
 const spacing = StyleSheet.create ({
@@ -194,6 +195,22 @@ const spacing = StyleSheet.create ({
     mrTen: {marginRight: Ten},
     mxTen: {marginHorizontal: Ten},
     myTen: {marginVertical: Ten},
+
+    pTwenty : {padding: Twenty},
+    ptTwenty: {paddingTop: Twenty},
+    pbTwenty: { paddingBottom: Twenty},
+    plTwenty : {paddingLeft: Twenty},
+    prTwenty: {paddingRight: Twenty},
+    pxTwenty: {paddingHorizontal: Twenty},
+    pyTwenty: {paddingVertical: Twenty},
+
+    mTwenty: {margin: Twenty},
+    mtTwenty: {marginTop: Twenty},
+    mbTwenty: { marginBottom: Twenty},
+    mlTwenty : {marginLeft: Twenty},
+    mrTwenty: {marginRight: Twenty},
+    mxTwenty: {marginHorizontal: Twenty},
+    myTwenty: {marginVertical: Twenty},
 
 
 })

@@ -128,16 +128,22 @@ export const onUserLogout = () => {
     }
 }
 
-// export const getUserDetail = (id) => {
-//     return (dispatch) => {
-//         Axios.get (urlAPI + `/users/${id}`)
+export const getUserEmail = (id) => {
 
-//         .then ((res) => {
-//             console.log (res.data)
-//         })
+    return (dispatch) => {
+        Axios.get (urlAPI + `/users/${id}`)
 
-//         .catch ((err) => {
-//             console.log (err)
-//         })
-//     }
-// }
+        .then ((res) => {
+            dispatch (
+                {
+                    type: "GET_USER_EMAIL",
+                    payload: res.data.email
+                }
+            )
+        })
+
+        .catch ((err) => {
+            console.log (err)
+        })
+    }
+}

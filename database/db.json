@@ -32,7 +32,7 @@
       "price": 275000,
       "timeDeparture": "11:00",
       "timeArrival": "23:45",
-      "travelTime":"12h 45m",
+      "travelTime": "12h 45m",
       "seat": [
         "1A",
         "1B",
@@ -88,7 +88,7 @@
       "price": 225000,
       "timeDeparture": "21:00",
       "timeArrival": "11:00",
-      "travelTime":"13h 00m",
+      "travelTime": "13h 00m",
       "seat": [
         "1A",
         "1B",
@@ -144,7 +144,7 @@
       "price": 225000,
       "timeDeparture": "20:00",
       "timeArrival": "10:00",
-      "travelTime":"13h 00m",
+      "travelTime": "13h 00m",
       "seat": [
         "1A",
         "1B",
@@ -200,7 +200,7 @@
       "price": 125000,
       "timeDeparture": "07:30",
       "timeArrival": "11:30",
-      "travelTime":"4h 00m",
+      "travelTime": "4h 00m",
       "seat": [
         "1A",
         "1B",
@@ -232,7 +232,7 @@
       "price": 105000,
       "timeDeparture": "12:00",
       "timeArrival": "16:00",
-      "travelTime":"4h 00m",
+      "travelTime": "4h 00m",
       "seat": [
         "1A",
         "1B",
@@ -282,31 +282,87 @@
       "image": "https://www.flaticon.com/svg/vstatic/svg/4164/4164916.svg?token=exp=1616259493~hmac=835794a1b4400b6eed7a34b61ddc4a07"
     }
   ],
-  "transaction": [
+  "transactions": [
     {
+      "id": 1,
       "status": "paid",
       "idUser": 1,
-      "idShuttle":1,
+      "idShuttle": 1,
       "shuttleName": "Pahala Kencana",
       "class": "Executive",
-      "from" : "Bandung",
-      "to" : "Surabaya",
+      "from": "Bandung",
+      "to": "Surabaya",
       "departureDate": "31-03-2021",
-      "seat": ["1A", "1B"],
+      "seat": [
+        "1A",
+        "1B"
+      ],
       "totalPrice": 550000
     },
-
     {
+      "id": 2,
       "status": "paid",
       "idUser": 2,
-      "idShuttle":1,
+      "idShuttle": 1,
       "shuttleName": "Pahala Kencana",
       "class": "Executive",
-      "from" : "Bandung",
-      "to" : "Surabaya",
+      "from": "Bandung",
+      "to": "Surabaya",
       "departureDate": "31-03-2021",
-      "seat": ["2A", "2B"],
+      "seat": [
+        "2A",
+        "2B"
+      ],
       "totalPrice": 550000
+    },
+    {
+      "status": "unpaid",
+      "idUser": "3",
+      "emailUser": "user03@email.com",
+      "idShuttle": 1,
+      "shuttleName": "Pahala Kencana",
+      "class": "Executive",
+      "from": "Bandung",
+      "to": "Surabaya",
+      "departureDate": "31-03-2021",
+      "seats": [
+        "1C",
+        "1D",
+        "2C",
+        "2D"
+      ],
+      "passengers": [
+        {
+          "numSeat": "1C",
+          "name": "Person1",
+          "age": "46",
+          "valid": true
+        },
+        {
+          "numSeat": "1D",
+          "name": "Person2",
+          "age": "44",
+          "valid": true
+        },
+        {
+          "numSeat": "2C",
+          "name": "Person3",
+          "age": "17",
+          "valid": true
+        },
+        {
+          "numSeat": "2D",
+          "name": "Person4",
+          "age": "15",
+          "valid": true
+        }
+      ],
+      "totalPrice": 1100000,
+      "contactPhone": "0812-xxxx-yyyy",
+      "timeExpired": "2021-03-29 23:41:27",
+      "timePaid": null,
+      "timeCancelled": null,
+      "id": 3
     }
   ]
 }

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import AsyncStorage from "@react-native-async-storage/async-storage"
 import { connect } from "react-redux"
 import { Container, Col, Content, Grid, H1, H2, Row, Spinner, Text, View, Button, Toast, Footer } from "native-base"
 import { Image, ToastAndroid, TouchableOpacity } from "react-native"
@@ -18,7 +19,7 @@ import Icon from "react-native-vector-icons/FontAwesome"
 const ShuttleDetail = ({navigation: {navigate}, navigation, route, getShuttleDetail, getBookedSeat, shuttles, search}) => {
 
     const [inputBookingSeat, setBookingSeat] = useState ([]) 
-    // const [totalPrice, setTotalPrice] = useState (0)
+    const [idUser, setIdUser] = useState (null)
 
     const setSeatBooking = (input, lim) => {
 
@@ -59,15 +60,28 @@ const ShuttleDetail = ({navigation: {navigate}, navigation, route, getShuttleDet
     }
 
     const proceedBooking = () => {
-        navigate ("BookingDetail", {seats: inputBookingSeat, price: shuttles.shuttleDetail.price})
+        navigate ("BookingDetail", {seats: inputBookingSeat, price: shuttles.shuttleDetail.price, userId: idUser})
+    }
+
+    const getAsyncStorage = () => {
+        AsyncStorage.getItem ("id")
+
+        .then ((res) => {
+            setIdUser (res)
+        })
+
+        .catch ((err) => {
+            console.log (err)
+        })
     }
 
     useEffect (() => {
         let idShuttle = route.params.id
         let departureDate = search.date
-        
+
         getShuttleDetail (idShuttle)
         getBookedSeat (idShuttle, departureDate)
+        getAsyncStorage ()
         
     }, [])
 
