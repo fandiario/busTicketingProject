@@ -7,9 +7,12 @@
 
 #29-Mar-2021
 
-1. Buat Validasi Untuk onPayment Button. Data harus terisi semua.
-2. Tampilkan detail penumpang di payment 
-4. Ketika waktu transaksi habis. secara otomatis jadi canceled transaction
-5. map transaction History
-6. Ubah pembacaan data di payment lewat global 
+1. map transaction History
+
+#30-Mar-20-21
+1.a  Buat new property di reducer Transaction untuk mendapat allTransaction History by User
+1.b  Setiap komponen transaction yang akan dibuat dirender ulang ke allTransaction (baik dalam pay, cancel or unpaid)
+1.c Dalam booking history get data transaction from transaction reducer
+
+
 

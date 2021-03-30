@@ -53,7 +53,7 @@ const Home = ({navigation: {navigate}, onBookingSearch, search}) => {
                    </Row>
                 </Grid>
 
-                <Form style={{...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderRadThree, ...spacingStyle.myFive}}>
+                <Form style={{...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderRadThree, ...spacingStyle.myFive, ...spacingStyle.mxThree}}>
                     {/* <Item stackedLabel>
                         <Label style={{...typoStyle.fsBold}}>Shuttle Type :</Label>
                         <Picker

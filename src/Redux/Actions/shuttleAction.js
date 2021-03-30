@@ -84,24 +84,64 @@ export const getShuttleDetail = (id) => {
 
 export const getBookedSeat = (idShuttle, departureDate) => {
     return (dispatch) => {
-        Axios.get (urlAPI + `/transactions?idShuttle=${idShuttle}&departureDate=${departureDate}`)
 
-        .then ((res) => { 
-            let arrSeat = []
+        // Axios.get (urlAPI + `/transactions?idShuttle=${idShuttle}&departureDate=${departureDate}`)
+
+        // .then ((res) => { 
+        //     // console.log (res.data)
+            
+        //     let arrSeat = []
+
+        //     for (let i = 0; i < res.data.length; i++) {
+
+        //         if (res.data[i].status === "paid" || res.data[i].status === "unpaid") {
+        //             for (let j = 0; j < res.data[i].seats.length; j++) {
+        //                 arrSeat.push (res.data[i].seats[j])
+        //             } 
+
+        //             dispatch (
+        //                 {
+        //                     type: "GET_DATA_SEAT_BOOKED",
+        //                     payload: arrSeat
+        //                 }
+        //             )
+
+        //         } else {
+        //             dispatch (
+        //                 {
+        //                     type: "GET_DATA_SEAT_BOOKED",
+        //                     payload: null
+        //                 }
+        //             )
+        //         }
+
+                
+        //     }
+            
+        // })
+
+        // .catch ((err) => {
+        //     console.log (err)
+        // })
+
+        Axios.get (urlAPI + `/transactions?idShuttle=${idShuttle}&departureDate=${departureDate}&status=paid&status=unpaid`)
+
+        .then ((res) => {
+            let arrSeats = []
 
             for (let i = 0; i < res.data.length; i++) {
-
-                for (let j = 0; j < res.data[i].seat.length; j++) {
-                    arrSeat.push (res.data[i].seat[j])
-                } 
+                for (let j = 0; j < res.data[i].seats.length; j++) {
+                    arrSeats.push (res.data[i].seats[j])
+                }
             }
 
             dispatch (
                 {
                     type: "GET_DATA_SEAT_BOOKED",
-                    payload: arrSeat
+                    payload: arrSeats
                 }
             )
+
         })
 
         .catch ((err) => {

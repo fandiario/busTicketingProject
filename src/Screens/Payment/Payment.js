@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import Axios from "axios"
+import { ToastAndroid } from "react-native"
 import { Container, Content, H1, Row, Grid, View, H2, Text, Col, Button, Spinner, Accordion} from "native-base"
 
 // Redux
@@ -52,6 +53,11 @@ const Payment = ({navigation, route, getDataTransaction, transactions}) => {
         Axios.patch (urlAPI + `/transactions/${idTransaction}`, {status: "cancelled", timeExpired: null, timeCancelled: presentTime})
 
         .then ((res) => {
+            ToastAndroid.showWithGravity (
+                "Your booking order has been cancelled. Thank you for your patronage",
+                ToastAndroid.LONG,
+                ToastAndroid.CENTER
+            )
             getDataTransaction (route.params.idTransaction)
         })
 
@@ -68,6 +74,11 @@ const Payment = ({navigation, route, getDataTransaction, transactions}) => {
         Axios.patch (urlAPI + `/transactions/${idTransaction}`, {status: "paid", timeExpired: null, timePaid: presentTime})
 
         .then ((res) => {
+            ToastAndroid.showWithGravity (
+                "Your payment has been accepted. Thank you for your patronage",
+                ToastAndroid.LONG,
+                ToastAndroid.CENTER
+            )
             getDataTransaction (route.params.idTransaction)
         })
 

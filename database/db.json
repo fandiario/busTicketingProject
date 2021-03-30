@@ -293,7 +293,7 @@
       "from": "Bandung",
       "to": "Surabaya",
       "departureDate": "31-03-2021",
-      "seat": [
+      "seats": [
         "1A",
         "1B"
       ],
@@ -309,7 +309,7 @@
       "from": "Bandung",
       "to": "Surabaya",
       "departureDate": "31-03-2021",
-      "seat": [
+      "seats": [
         "2A",
         "2B"
       ],

@@ -109,8 +109,6 @@ const ShuttleDetail = ({navigation: {navigate}, navigation, route, getShuttleDet
         )
     }
 
-
-
     return (
         <Container>
             <Content>
