@@ -9,6 +9,7 @@ import { Container, Content, Grid, Row, H1, H2, View, Col, Text, Form, Item, Lab
 import { connect } from "react-redux"
 import { onPayment } from "../../Redux/Actions/bookingAction"
 import { getUserEmail } from "../../Redux/Actions/userAction"
+import { getAllDataTransaction, getTimeExpired } from "../../Redux/Actions/transactionAction"
 
 // Moment
 import Moment from "moment"
@@ -28,7 +29,7 @@ import Icon from "react-native-vector-icons/FontAwesome"
 
 
 
-const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, getUserEmail, shuttles, search, user}) => {
+const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, getUserEmail, getAllDataTransaction,getTimeExpired, shuttles, search, user}) => {
 
     const [contactInfo, setContactInfo] = useState (
         {
@@ -114,6 +115,7 @@ const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, ge
     }
 
     const proceedPayment = () => {
+        let presentTime = Moment (new Date ()).utcOffset ("+07:00").format ("YYYY-MM-DD HH:mm:ss")
         let expiredAt = Moment (new Date ()).add ({minutes: 15}).utcOffset("+07:00").format ("YYYY-MM-DD HH:mm:ss")
         let validToBook = false
         let scoreValidPass = 0
@@ -131,11 +133,17 @@ const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, ge
             seats: contactInfo.seats,
             passengers: contactInfo.passengers,
             totalPrice: contactInfo.totalPrice,
-            contactPhone: contactInfo.phoneUser, 
+            contactPhone: contactInfo.phoneUser,
+            timeCreated: presentTime,
             timeExpired: expiredAt,
             timePaid: null,
             timeCancelled: null
         }
+
+        // let timeDifferences = Moment.duration (Moment(expiredAt).diff(Moment(presentTime)) )
+        // let second = timeDifferences.asSeconds()
+
+        // getTimeExpired (second)
 
         for (let i = 0; i < contactInfo.passengers.length; i++) {
             if (contactInfo.passengers[i].valid === true) {
@@ -147,12 +155,13 @@ const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, ge
             validToBook = true
         }
 
-        if (validToBook === true && contactInfo.emailUser && contactInfo.phoneUser) {
+        if (validToBook === true && user.email && contactInfo.phoneUser) {
             Axios.post (urlAPI + `/transactions`, {...dataToSend})
 
             .then ((res) => {
                 onPayment (dataToSend)
-                navigate ("Payment", {data: dataToSend, idTransaction: res.data.id})
+                getAllDataTransaction (contactInfo.idUser)
+                navigate ("Payment", {idTransaction: res.data.id, timeExpired: expiredAt})
             })
 
             .catch ((err) => {
@@ -223,7 +232,7 @@ const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, ge
                             Email:
                         </Label>
 
-                        <Input defaultValue={contactInfo.emailUser} onChangeText={(input) => setContactInfo ({...contactInfo, emailUser: input})}>
+                        <Input defaultValue={user.email} onChangeText={(input) => setContactInfo ({...contactInfo, emailUser: input})}>
                         </Input>
                     </Item>
 
@@ -308,7 +317,10 @@ const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, ge
 }
 
 const mapDispatchToProps = {
-    onPayment, getUserEmail
+    onPayment, 
+    getUserEmail, 
+    getAllDataTransaction,
+    getTimeExpired
 }
 
 const mapStateToProps = (state) => {

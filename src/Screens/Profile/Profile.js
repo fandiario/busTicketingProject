@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react"
-import { connect } from "react-redux"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { Image } from "react-native"
 import { Button, Container, Text, Grid, Row, H1, H2, View, Spinner, Col, Header, Content, Form, Item, Label, Input, Textarea } from "native-base"
 
 // Redux
+import { connect } from "react-redux"
 import {onUserLogout} from "../../Redux/Actions/userAction"
 
 // Import CSS
@@ -14,7 +15,6 @@ import borderStyle from "../../Supports/Styles/Border"
 
 // Icon
 import Icon from "react-native-vector-icons/FontAwesome"
-import { Image } from "react-native"
 
 // Image Picker
 import ImagePicker from 'react-native-image-crop-picker'
@@ -143,12 +143,6 @@ const Profile = ( {onUserLogout} ) => {
                     <Item floatingLabel>
                         <Label>
                             Name
-                        </Label>
-                        <Input></Input>
-                    </Item>
-                    <Item floatingLabel style={{...spacingStyle.mtOne}}>
-                        <Label>
-                            Identity Number 
                         </Label>
                         <Input></Input>
                     </Item>

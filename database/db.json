@@ -284,85 +284,123 @@
   ],
   "transactions": [
     {
-      "id": 1,
-      "status": "paid",
-      "idUser": 1,
-      "idShuttle": 1,
-      "shuttleName": "Pahala Kencana",
-      "class": "Executive",
-      "from": "Bandung",
-      "to": "Surabaya",
-      "departureDate": "31-03-2021",
-      "seats": [
-        "1A",
-        "1B"
-      ],
-      "totalPrice": 550000
-    },
-    {
-      "id": 2,
-      "status": "paid",
-      "idUser": 2,
-      "idShuttle": 1,
-      "shuttleName": "Pahala Kencana",
-      "class": "Executive",
-      "from": "Bandung",
-      "to": "Surabaya",
-      "departureDate": "31-03-2021",
-      "seats": [
-        "2A",
-        "2B"
-      ],
-      "totalPrice": 550000
-    },
-    {
       "status": "paid",
       "idUser": "3",
-      "emailUser": "user03@email.com",
       "idShuttle": 1,
       "shuttleName": "Pahala Kencana",
       "class": "Executive",
       "from": "Bandung",
       "to": "Surabaya",
-      "departureDate": "31-03-2021",
+      "departureDate": "03-04-2021",
       "seats": [
-        "1C",
-        "1D",
-        "2C",
-        "2D"
+        "1C"
       ],
       "passengers": [
         {
           "numSeat": "1C",
           "name": "Person1",
-          "age": "45",
-          "valid": true
-        },
-        {
-          "numSeat": "1D",
-          "name": "Person2",
-          "age": "43",
-          "valid": true
-        },
-        {
-          "numSeat": "2C",
-          "name": "Person3",
-          "age": "16",
-          "valid": true
-        },
-        {
-          "numSeat": "2D",
-          "name": "Person4",
-          "age": "14",
+          "age": "39",
           "valid": true
         }
       ],
-      "totalPrice": 1100000,
+      "totalPrice": 275000,
       "contactPhone": "0812-xxxx-yyyy",
+      "timeCreated": "2021-04-01 06:00:34",
       "timeExpired": null,
-      "timePaid": "2021-03-30 01:10:25",
+      "timePaid": "2021-04-01 06:09:41",
       "timeCancelled": null,
+      "id": 1
+    },
+    {
+      "status": "cancelled",
+      "idUser": "3",
+      "idShuttle": 4,
+      "shuttleName": "Jackal Holiday",
+      "class": "Executive",
+      "from": "Bandung",
+      "to": "Tangerang",
+      "departureDate": "25-04-2021",
+      "seats": [
+        "1A",
+        "1B"
+      ],
+      "passengers": [
+        {
+          "numSeat": "1A",
+          "name": "Person1",
+          "age": "36",
+          "valid": true
+        },
+        {
+          "numSeat": "1B",
+          "name": "Person2",
+          "age": "39",
+          "valid": true
+        }
+      ],
+      "totalPrice": 250000,
+      "contactPhone": "0812-xxxx-yyyy",
+      "timeCreated": "2021-04-01 09:57:05",
+      "timeExpired": null,
+      "timePaid": null,
+      "timeCancelled": "2021-04-01 10:00:07",
+      "id": 2
+    },
+    {
+      "status": "cancelled",
+      "idUser": "3",
+      "idShuttle": 2,
+      "shuttleName": "Sugeng Rahayu",
+      "class": "Executive",
+      "from": "Bandung",
+      "to": "Surabaya",
+      "departureDate": "11-04-2021",
+      "seats": [
+        "3C"
+      ],
+      "passengers": [
+        {
+          "numSeat": "3C",
+          "name": "Person3",
+          "age": "15",
+          "valid": true
+        }
+      ],
+      "totalPrice": 225000,
+      "contactPhone": "0812-xxxx-yyyy",
+      "timeCreated": "2021-04-01 10:06:15",
+      "timeExpired": null,
+      "timePaid": null,
+      "timeCancelled": "2021-04-01 10:07:15",
       "id": 3
+    },
+    {
+      "status": "paid",
+      "idUser": "3",
+      "idShuttle": 4,
+      "shuttleName": "Jackal Holiday",
+      "class": "Executive",
+      "from": "Bandung",
+      "to": "Tangerang",
+      "departureDate": "19-04-2021",
+      "seats": [
+        "1C"
+      ],
+      "passengers": [
+        {
+          "numSeat": "1C",
+          "name": "Person5",
+          "age": "65",
+          "valid": true
+        }
+      ],
+      "totalPrice": 125000,
+      "contactPhone": "0812-xxxx-yyyy",
+      "timeCreated": "2021-04-01 14:15:06",
+      "timeExpired": null,
+      "timePaid": "2021-04-01 14:15:39",
+      "timeCancelled": null,
+      "id": 4
     }
   ]
 }

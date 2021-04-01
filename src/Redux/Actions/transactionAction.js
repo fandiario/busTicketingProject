@@ -19,6 +19,30 @@ export const getDataTransaction = (idTransaction) => {
             console.log (err)
         })
     }
+}
 
-     
+export const getAllDataTransaction = (idUser) => {
+    return (dispatch) => {
+        Axios.get (urlAPI + `/transactions?idUser=${idUser}`)
+
+        .then ((res) => {
+            dispatch (
+                {
+                    type: "GET_ALL_DATA_TRANSACTION",
+                    payload: res.data
+                }
+            )
+        })
+
+        .catch ((err) => {
+            console.log (err)
+        })
+    }
+}
+
+export const getTimeExpired = (expiredAt) => {
+    return {
+        type: "GET_TIME_EXPIRED",
+        payload: expiredAt
+    }
 }

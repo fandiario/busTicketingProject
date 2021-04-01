@@ -5,7 +5,7 @@ import { Container, Content, H1, Row, Grid, View, H2, Text, Col, Button, Spinner
 
 // Redux
 import { connect } from "react-redux"
-import { getDataTransaction } from "../../Redux/Actions/transactionAction"
+import { getDataTransaction,getAllDataTransaction, getTimeExpired } from "../../Redux/Actions/transactionAction"
 
 // Import CSS
 import colorStyle from "../../Supports/Styles/Color"
@@ -28,21 +28,29 @@ import CountDown from "react-native-countdown-component"
 import { urlAPI } from "../../Supports/Constants/urlAPI"
 
 
-const Payment = ({navigation, route, getDataTransaction, transactions}) => {
+const Payment = ({navigation, route, getDataTransaction, getAllDataTransaction, transactions, user}) => {
 
     useEffect (() => {
         getDataTransaction (route.params.idTransaction)
+        // expiredTransaction()
+    
+        if (transactions.dataTransaction !== null) {
+            // console.log (`Expired = ${transactions.dataTransaction.timeExpired}`)
+            // console.log (`Created = ${transactions.dataTransaction.timeCreated}`)
+            expiredTransaction()
+        }
     })
 
     const [countExpired, setCountExpired] = useState (null)
 
-    const expireTransaction = () => {
-        let expiredAt = transactions.dataTransaction.timeExpired
+    const expiredTransaction = () => {
         let presentTime = Moment (new Date ()).utcOffset ("+07:00").format ("YYYY-MM-DD HH:mm:ss")
+        // let expiredAt = route.params.timeExpired
+        // let presentTime = route.params.timeCreated
+        let expiredAt = transactions.dataTransaction.timeExpired
 
         let timeDifferences = Moment.duration (Moment(expiredAt).diff(Moment(presentTime)) )
         let second = timeDifferences.asSeconds()
-
         setCountExpired (second)
     }
 
@@ -59,12 +67,12 @@ const Payment = ({navigation, route, getDataTransaction, transactions}) => {
                 ToastAndroid.CENTER
             )
             getDataTransaction (route.params.idTransaction)
+            getAllDataTransaction (user.id)
         })
 
         .catch ((err) => {
             console.log (err)
         })
-
     }
 
     const onPaid = () => {
@@ -80,6 +88,7 @@ const Payment = ({navigation, route, getDataTransaction, transactions}) => {
                 ToastAndroid.CENTER
             )
             getDataTransaction (route.params.idTransaction)
+            getAllDataTransaction (user.id)
         })
 
         .catch ((err) => {
@@ -87,13 +96,8 @@ const Payment = ({navigation, route, getDataTransaction, transactions}) => {
         })
     }
 
-    
 
-    // const dataArray = [
-    //     { title: "Detail", content: "Lorem ipsum dolor sit amet"}
-    // ]
-
-    if (transactions.dataTransaction === null) {
+    if (transactions.dataTransaction === null || countExpired === null) {
         return (
             <Container>
                 <Content>
@@ -140,15 +144,24 @@ const Payment = ({navigation, route, getDataTransaction, transactions}) => {
                 <Row style={{...spacingStyle.mtThree, ...spacingStyle.pyTwo, ...spacingStyle.mxThree, justifyContent:"center", ...borderStyle.borderPrimary, ...borderStyle.borderWidthThree, ...borderStyle.borderWidthThree, ...borderStyle.borderRadThree }}>
                     {
                         transactions.dataTransaction.status === "unpaid" ?
-
                             <CountDown
-                                until={countExpired? countExpired : 900}
-                                onFinish={() => onCancelled ()}
+                                until={countExpired}
+                                onFinish={onCancelled}
                                 onPress={() => alert ("Please finish your transaction")}
+                                digitStyle={{...colorStyle.bgPrimary}}
+                                digitTxtStyle={{...colorStyle.light}}
                                 timeLabels={{m: "minute", s: "second"}}
                                 timeToShow={["M", "S"]}
                                 size={25}
                             ></CountDown>
+                            // <CountDown
+                            //     until={transactions.timeExpired}
+                            //     onFinish={() => onCancelled ()}
+                            //     onPress={() => alert ("Please finish your transaction")}
+                            //     timeLabels={{m: "minute", s: "second"}}
+                            //     timeToShow={["M", "S"]}
+                            //     size={25}
+                            // ></CountDown>
                         :
                             transactions.dataTransaction.status === "cancelled" ?
                                 <Text style={{...typoStyle.fsItalic}}>Transaction has been cancelled</Text>
@@ -475,12 +488,13 @@ const Payment = ({navigation, route, getDataTransaction, transactions}) => {
 }
 
 const mapDispatchToProps = {
-    getDataTransaction
+    getDataTransaction, getAllDataTransaction, getTimeExpired
 }
 
 const mapStateToProps = (state) => {
     return {
-        transactions: state.transactions
+        transactions: state.transactions,
+        user: state.user
     } 
 }
 

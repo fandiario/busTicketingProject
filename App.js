@@ -8,23 +8,28 @@
 
 import React, { useEffect, useState } from "react"
 
+// Router
 import "react-native-gesture-handler"
 import { NavigationContainer } from "@react-navigation/native"
-
 import RegisterNavigation from "./routes/RegisterRouter"
 import MainNavigation from "./routes/MainRouter"
+
+//Redux and ASyncStorage 
+import { connect } from "react-redux"
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { onSaveAsyncStorage } from "./src/Redux/Actions/userAction"
+
+// Splash
+import Splash from "./src/Screens/Splash/Splash"
+
+// OneSignal
+import OneSignal from "react-native-onesignal"
 
 // Redux
 // import { applyMiddleware, createStore } from 'redux'
 // import { Provider } from "react-redux"
 // import thunk from "redux-thunk"
 // import allReducer from "./src/Redux/Reducers/index"
-
-import { connect } from "react-redux"
-import AsyncStorage from "@react-native-async-storage/async-storage"
-import { onSaveAsyncStorage } from "./src/Redux/Actions/userAction"
-
-import Splash from "./src/Screens/Splash/Splash"
 
 // const store = createStore (allReducer, applyMiddleware (thunk))
 
@@ -46,8 +51,16 @@ const App = ({user, onSaveAsyncStorage}) => {
     })
   }
 
-  useEffect (() => {
+  useEffect ((async) => {
     getAsyncStorageData()
+
+    /* O N E S I G N A L   S E T U P */
+    OneSignal.setAppId("5b426a94-5145-4e9e-aebd-cdb4bb00cbbb");
+    OneSignal.setLogLevel(6, 0);
+    OneSignal.setRequiresUserPrivacyConsent(false);
+    OneSignal.promptForPushNotificationsWithUserResponse(response => {
+        console.log("Prompt response:", response);
+    })
   }, [])
 
   if (isLogin === false) {
