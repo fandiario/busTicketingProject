@@ -16,6 +16,9 @@ import {getShuttleDetail, getBookedSeat} from "../../Redux/Actions/shuttleAction
 // Icon
 import Icon from "react-native-vector-icons/FontAwesome"
 
+// Toasty
+import { RNToasty } from "react-native-toasty"
+
 const ShuttleDetail = ({navigation: {navigate}, navigation, route, getShuttleDetail, getBookedSeat, shuttles, search}) => {
 
     const [inputBookingSeat, setBookingSeat] = useState ([]) 
@@ -36,11 +39,17 @@ const ShuttleDetail = ({navigation: {navigate}, navigation, route, getShuttleDet
 
             // })
 
-            ToastAndroid.showWithGravity (
-                "You have meet your maximum seat reservation",
-                ToastAndroid.LONG,
-                ToastAndroid.CENTER
-            )
+            // ToastAndroid.showWithGravity (
+            //     "You have meet your maximum seat reservation",
+            //     ToastAndroid.LONG,
+            //     ToastAndroid.CENTER
+            // )
+
+            RNToasty.Error({
+                title:  "You have meet your maximum seat reservation",
+                duration: 1,
+                position: 'center',
+            })
         }
        
     }

@@ -27,6 +27,9 @@ import borderStyle from "../../Supports/Styles/Border"
 // Icon
 import Icon from "react-native-vector-icons/FontAwesome"
 
+// Toasty
+import { RNToasty } from "react-native-toasty"
+
 
 
 const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, getUserEmail, getAllDataTransaction,getTimeExpired, shuttles, search, user}) => {
@@ -169,11 +172,17 @@ const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, ge
             })
 
         } else {
-            ToastAndroid.showWithGravity (
-                "You have to fill every data",
-                ToastAndroid.LONG,
-                ToastAndroid.CENTER
-            )
+            // ToastAndroid.showWithGravity (
+            //     "You have to fill every data",
+            //     ToastAndroid.LONG,
+            //     ToastAndroid.CENTER
+            // )
+
+            RNToasty.Error({
+                title:  "You have to fill every data",
+                duration: 1,
+                position: 'center',
+            })
         }
 
     }
@@ -185,28 +194,28 @@ const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, ge
         // console.log (user.email)
     }, [])
 
-    // if (user.email === null) {
-    //     return (
-    //         <Container>
-    //              <Grid style={{...colorStyle.bgPrimary}}>
-    //                 <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree,}}>
-    //                     <Icon name="arrow-circle-left" size={30} style={{...colorStyle.light, ...spacingStyle.mrTwo}} onPress={() => navigation.goBack ()}></Icon>
-    //                     <H1 style={{...colorStyle.light, ...typoStyle.fsBold}}>
-    //                         BusyBus
-    //                     </H1>
-    //                 </Row>
+    if (contactInfo.emailUser === null) {
+        return (
+            <Container>
+                 <Grid style={{...colorStyle.bgPrimary}}>
+                    <Row style={{...spacingStyle.myThree, ...spacingStyle.mlThree,}}>
+                        <Icon name="arrow-circle-left" size={30} style={{...colorStyle.light, ...spacingStyle.mrTwo}} onPress={() => navigation.goBack ()}></Icon>
+                        <H1 style={{...colorStyle.light, ...typoStyle.fsBold}}>
+                            BusyBus
+                        </H1>
+                    </Row>
 
-    //                 <View style={{...spacingStyle.mtThree, ...spacingStyle.mlThree, justifyContent:"center" }}>
-    //                     <H2 style={{...typoStyle.fsBold}}>
-    //                         Shuttle Detail
-    //                     </H2>
-    //                 </View>
+                    <View style={{...spacingStyle.mtThree, ...spacingStyle.mlThree, justifyContent:"center" }}>
+                        <H2 style={{...typoStyle.fsBold}}>
+                            Shuttle Detail
+                        </H2>
+                    </View>
 
-    //                 <Spinner style={{marginTop: 50}}></Spinner>
-    //             </Grid>
-    //         </Container>
-    //     )
-    // } 
+                    <Spinner style={{marginTop: 50}}></Spinner>
+                </Grid>
+            </Container>
+        )
+    } 
 
     return (
         <Container>
@@ -232,7 +241,7 @@ const BookingDetail = ({navigation, navigation: {navigate}, route, onPayment, ge
                             Email:
                         </Label>
 
-                        <Input defaultValue={user.email} onChangeText={(input) => setContactInfo ({...contactInfo, emailUser: input})}>
+                        <Input defaultValue={contactInfo.emailUser} onChangeText={(input) => setContactInfo ({...contactInfo, emailUser: input})}>
                         </Input>
                     </Item>
 

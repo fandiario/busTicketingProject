@@ -27,6 +27,9 @@ import CountDown from "react-native-countdown-component"
 // urlAPI
 import { urlAPI } from "../../Supports/Constants/urlAPI"
 
+// Toasty
+import { RNToasty } from "react-native-toasty"
+
 
 const Payment = ({navigation, route, getDataTransaction, getAllDataTransaction, transactions, user}) => {
 
@@ -61,11 +64,18 @@ const Payment = ({navigation, route, getDataTransaction, getAllDataTransaction, 
         Axios.patch (urlAPI + `/transactions/${idTransaction}`, {status: "cancelled", timeExpired: null, timeCancelled: presentTime})
 
         .then ((res) => {
-            ToastAndroid.showWithGravity (
-                "Your booking order has been cancelled. Thank you for your patronage",
-                ToastAndroid.LONG,
-                ToastAndroid.CENTER
-            )
+            // ToastAndroid.showWithGravity (
+            //     "Your booking order has been cancelled. Thank you for your patronage",
+            //     ToastAndroid.LONG,
+            //     ToastAndroid.CENTER
+            // )
+
+            RNToasty.Success({
+                title:  "Your booking order has been cancelled. Thank you for your patronage",
+                duration: 1,
+                position: 'center',
+            })
+
             getDataTransaction (route.params.idTransaction)
             getAllDataTransaction (user.id)
         })
@@ -82,11 +92,18 @@ const Payment = ({navigation, route, getDataTransaction, getAllDataTransaction, 
         Axios.patch (urlAPI + `/transactions/${idTransaction}`, {status: "paid", timeExpired: null, timePaid: presentTime})
 
         .then ((res) => {
-            ToastAndroid.showWithGravity (
-                "Your payment has been accepted. Thank you for your patronage",
-                ToastAndroid.LONG,
-                ToastAndroid.CENTER
-            )
+            // ToastAndroid.showWithGravity (
+            //     "Your payment has been accepted. Thank you for your patronage",
+            //     ToastAndroid.LONG,
+            //     ToastAndroid.CENTER
+            // )
+
+            RNToasty.Success({
+                title:   "Your payment has been accepted. Thank you for your patronage",
+                duration: 1,
+                position: 'center',
+            })
+
             getDataTransaction (route.params.idTransaction)
             getAllDataTransaction (user.id)
         })
